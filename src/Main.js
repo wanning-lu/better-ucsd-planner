@@ -18,6 +18,7 @@ function Main() {
 
     return (
         <>
+        {/* navbar */}
         <div class="flex justify-between p-8 font-semibold">
             <div class="border-2">better ucsd planner</div>
             <div class="flex border-2 justify-center space-x-4">
@@ -35,6 +36,7 @@ function Main() {
             </div>
             <div class="border-2">about</div>
         </div>
+        {/* viewer for courses */}
         <div class="flex justify-center border-2">
             <CourseViewer selection={state}/>
         </div>
