@@ -9,31 +9,75 @@ import majorData from './CS26.json'
 /**
  * Adds information to the Node object to initialize it, including its key property 
  * and text.
- * @param {Object} node       The node object to be entered into the dataArray.
+ * @param {Object} parent     The parent of the node to be initialized.
  * @param {Object} nodeInfo   The JSON object containing the info for the course.
  * @param {String} group      The key for the group; otherwise null.
+ * @param {int} randomNumber  A random number to initialize the key of the node.
  */
-function initNode(node, nodeInfo, group, randomNumber) {
+function initNode(parent, nodeInfo, group, randomNumber) {
+	let node = structuredClone(nodeInfo)
 	node['text'] = nodeInfo['course_code']
+
+	// set group information of the node
 	if (group != null) {
 		node['group'] = group;
 		node['key'] = nodeInfo['course_code'] + randomNumber // bandaid solution for group duplicates
 	} else {
 		node['key'] = nodeInfo['course_code'] + randomNumber
 	}
+
+	// set parent information of the node
+	if (parent != null) {
+		node['parent'] = parent['key']
+	} else {
+		node['parent'] = null
+	}
 	
     // only expand if it's the first instance (i know, might backfire...)
+	// as well as being a core requirement
+	// also expands its parents, ONLY if it's < 3 deep in the tree
     if ((dataArray.filter(obj => obj.course_code === node['course_code']).length === 0) &&
-            majorData1['core_classes'].includes(nodeInfo['course_code'])) {
-        node['expanded'] = true
+            coreClasses.includes(nodeInfo['course_code'])) {
+        expandCoreNodes(node, false)
+		console.log(node)
 	}
 
     // highlight if it's part of the major's courses
-    if (majorData1['core_classes'].includes(nodeInfo['course_code'])) {
+    if (coreClasses.includes(nodeInfo['course_code'])) {
         node['color'] = 'aquamarine'
     }
 
 	return node;
+}
+
+function checkNodesAreCore(node) {
+	if (node === null) {
+		return true
+	}
+
+	if (coreClasses.includes(node['course_code'])) {
+		if (node['parent'] === null) {
+			return true
+		}
+        return checkNodesAreCore(dataArray.filter(obj => obj.key === node['parent'])[0])
+    } else {
+		return false
+	}
+}
+
+function expandCoreNodes(node, checked) {
+	// first see if all the nodes in the parent tree
+	if (!checked && !checkNodesAreCore(node)) {
+		return
+	}
+
+	node['expanded'] = true
+	console.log("expansion", node)
+	
+	if (node['parent'] === null) {
+		return
+	}
+	expandCoreNodes(dataArray.filter(obj => obj.key === node['parent'])[0], true)
 }
 
 /**
@@ -68,16 +112,18 @@ function buildGraph(root, prereq, groupName, dataArray, linkArray) {
 		}
 		
 		if (groupName != null) { // if the node belongs to a group
-			dataArray.push(initNode(prereqObj, prereqObj, groupName, dataArray.length))
+			let newNode = initNode(root, prereqObj, groupName, dataArray.length)
+			dataArray.push(newNode)
             linkArray.push({from: groupName, to: dataArray[dataArray.length-1]['key'], defaultColor: "rgba(0, 0, 0, 0)"})
 			prereqObj.prerequisites.forEach(function (prePrereq) {
-				buildGraph(prereqObj, prePrereq, null, dataArray, linkArray)
+				buildGraph(newNode, prePrereq, null, dataArray, linkArray)
 			})
 		} else {
-			dataArray.push(initNode(prereqObj, prereqObj, null, dataArray.length))
+			let newNode = initNode(root, prereqObj, null, dataArray.length)
+			dataArray.push(newNode)
 			linkArray.push({from: root.key, to: dataArray[dataArray.length-1]['key']})
 			prereqObj.prerequisites.forEach(function (prePrereq) {
-				buildGraph(prereqObj, prePrereq, null, dataArray, linkArray)
+				buildGraph(newNode, prePrereq, null, dataArray, linkArray)
 			})
 		}
 	}
@@ -90,6 +136,12 @@ let dataArray = []
 // the outgoing to be the prerequisite
 let linkArray = []
 
+// ok...another bandaid solution but i want all the first courses of
+// a multi-selection core requirement to be the real "core"
+let coreClasses = []
+
+dataArray.push({key: "lolrandom", text: "lolrandom"})
+
 // THIS IS THE BIG SHOOWWWW LET'S TRY TO ITERATE THROUGH THE MAJOR!!!!
 let majorData1 = majorData[0]
 for (const majorKey in majorData1) {
@@ -101,36 +153,45 @@ for (const majorKey in majorData1) {
         // let's sort the core classes by their number part of the code
         // for example, 10, 110, 190 should sort into 190, 110, 10
         majorData1[majorKey] = majorData1[majorKey].sort((a,b) => a.substring(a.search(/[0-9]/)).localeCompare(b.substring(b.search(/[0-9]/))))
-        console.log(majorData1[majorKey])
-        for (const coreClass of majorData1[majorKey]) {
 
+		let coreKey = `group${dataArray.length}`
+		dataArray.push({key: coreKey, isGroup: true, text: "core requirements"})
+
+		// refer to coreClasses declaration above
+		for (const coreClass of majorData1[majorKey]) {
+			let options = coreClass.split(' or ')
+			coreClasses.push(options[0])
+		}
+
+        for (const coreClass of majorData1[majorKey]) {
             let options = coreClass.split(' or ')
 
             if (options.length === 1) {
                 let coreClassData = courseData.filter(obj => obj.course_code === coreClass)[0]
-                // check to see if it's already in the graph
-                console.log(dataArray.filter(obj => obj.text === coreClass))
                 if (dataArray.filter(obj => obj.text === coreClass).length === 0) {
                     // if not, let's add it and its prerequisites
-                    console.log(coreClassData)
-                    dataArray.push(initNode(coreClassData, coreClassData, null, dataArray.length))
+                    let rootNode = initNode(null, coreClassData, coreKey, dataArray.length)
+                    dataArray.push(rootNode)
                     
                     coreClassData.prerequisites.forEach(function (prereq) {
-                        buildGraph(coreClassData, prereq, null, dataArray, linkArray);
+                        buildGraph(rootNode, prereq, null, dataArray, linkArray);
                     })
                 }
             } else {
                 let groupKey = `group${dataArray.length}`
-                dataArray.push({key: groupKey, isGroup: true, text:`choose 1`})
+                dataArray.push({key: groupKey, isGroup: true, text:`choose one`, group: coreKey})
                 options.forEach(function (elective) {
                     buildGraph(null, [elective], groupKey, dataArray, linkArray)
-		})
+				})
             }
-            
         }
     } else {
-        continue
-        // let groupKey = `group${dataArray.length}`
+        let groupKey = `group${dataArray.length}`
+		console.log("elective:", majorData1[majorKey], majorData1[majorKey][0])
+		// ignore the url case for now
+		if (majorData1[majorKey].length === 1 || majorData1[majorKey].length > 30) {
+			continue
+		}
 		// dataArray.push({key: groupKey, isGroup: true, text:`${majorKey}: choose ${majorData1[majorKey][0]}`})
         // majorData1[majorKey].forEach(function (elective) {
 		// 	buildGraph(null, [elective], groupKey, dataArray, linkArray)
@@ -244,18 +305,16 @@ function initDiagram() {
 			new go.Panel("Horizontal",  // the header
 				{ defaultAlignment: go.Spot.Top })
 			.add(
-				// // the button for the user to expand/collapse the group
-				// go.GraphObject.make("SubGraphExpanderButton"),
 				// group title near top, next to button
 				new go.TextBlock({ font: "12pt Sans-Serif" })
 				.bind("text")
 			),
 			// represents area for all member parts
-			new go.Placeholder({ padding: new go.Margin(0, 10), background: "white" })
+			new go.Placeholder({ padding: new go.Margin(10, 10), background: "white" })
 		)
 	);
 
-	diagram.layout = new go.TreeLayout();
+	diagram.layout = new go.TreeLayout({arrangement: go.TreeArrangement.Horizontal});
 
 	return diagram;
 }
