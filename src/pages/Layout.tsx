@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, FC } from 'react';
-import CourseViewer from './CourseViewer';
 import { Link, Outlet } from "react-router-dom";
 
 const majors: string[] = ["major 1", "major 2"];

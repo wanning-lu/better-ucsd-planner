@@ -16,7 +16,7 @@
     ],
     "name": "Computer Science",
     "code": "CS26",
-    "Abstraction Elective": [
+    "Abstraction Electives": [
         3,
         "CSE 105",
         "CSE 106",
@@ -34,7 +34,7 @@
         "MATH 181D",
         "MATH 187A"
     ],
-    "Applications Elective": [
+    "Applications Electives": [
         3,
         "CSE 112",
         "CSE 118",
@@ -141,7 +141,7 @@
         "SIO 126",
         "SIO 128"
     ],
-    "Lower Division Elective": [
+    "Lower Division Electives": [
         1,
         "CSE 3",
         "CSE 4GS",
@@ -167,7 +167,7 @@
         "NANO 15",
         "CENG 15"
     ],
-    "Open CSE elective": [
+    "Open CSE Electives": [
         6,
         "https://cse.ucsd.edu/undergraduate/2024-2025-cse-electives-and-technical-electives"
     ],
@@ -179,7 +179,7 @@
         "ECE 109",
         "CSE 103"
     ],
-    "Systems Elective": [
+    "Systems Electives": [
         3,
         "CSE 120",
         "CSE 121",

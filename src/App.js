@@ -1,5 +1,4 @@
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout"
 import Discover from "./pages/Discover";

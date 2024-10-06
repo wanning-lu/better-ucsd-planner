@@ -8,16 +8,24 @@ function Dropdown(props) {
     }
 
     return (
-        <div className="w-full cursor-pointer hover:bg-stone-100" onClick={handleOpen}>
+        <div className="w-5/6 mx-auto p-2 rounded-md cursor-pointer hover:bg-stone-100" onClick={handleOpen}>
             <div>
                 {/* placeholder for an icon LOL */}
                 {open ? (
                    <>{'v '}</>
                 ) : <>{'> '}</>}
-                some requirement
+                {/* title of the dropdown and num classes for the requirement */}
+                {props.electiveName ? (
+                    <>{props.electiveName} ({props.numRequired})</>
+                ) : <>Core Requirements ({props.classes.length})</>}
             </div>
-            {open ? (
-                <div>heyy</div>
+            {/* rendering for core classes */}
+            {open && !props.electiveName ? (
+                <div>core</div>
+            ) : null}
+            {/* rendering for elective classes */}
+            {open && props.electiveName ? (
+                <div>elective</div>
             ) : null}
         </div>
     )
