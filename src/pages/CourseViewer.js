@@ -3,8 +3,8 @@ import * as go from 'gojs'
 import { ReactDiagram } from 'gojs-react'
 
 import './App.css';  // contains .diagram-component CSS
-import courseData from './CSE.json'
-import majorData from './CS26.json'
+import courseData from '../data/CSE.json'
+import majorData from '../data/CS26.json'
 
 /**
  * Adds information to the Node object to initialize it, including its key property 
@@ -39,7 +39,6 @@ function initNode(parent, nodeInfo, group, randomNumber) {
     if ((dataArray.filter(obj => obj.course_code === node['course_code']).length === 0) &&
             coreClasses.includes(nodeInfo['course_code'])) {
         expandCoreNodes(node, false)
-		console.log(node)
 	}
 
     // highlight if it's part of the major's courses
@@ -72,7 +71,6 @@ function expandCoreNodes(node, checked) {
 	}
 
 	node['expanded'] = true
-	console.log("expansion", node)
 	
 	if (node['parent'] === null) {
 		return
@@ -140,8 +138,6 @@ let linkArray = []
 // a multi-selection core requirement to be the real "core"
 let coreClasses = []
 
-dataArray.push({key: "lolrandom", text: "lolrandom"})
-
 // THIS IS THE BIG SHOOWWWW LET'S TRY TO ITERATE THROUGH THE MAJOR!!!!
 let majorData1 = majorData[0]
 for (const majorKey in majorData1) {
@@ -160,7 +156,12 @@ for (const majorKey in majorData1) {
 		// refer to coreClasses declaration above
 		for (const coreClass of majorData1[majorKey]) {
 			let options = coreClass.split(' or ')
-			coreClasses.push(options[0])
+			if (options.length === 1) {
+				coreClasses.push(options[0])
+			} else {
+				// the first element is the number of "recommended" courses, which are all placed in the front
+				coreClasses = coreClasses.concat(options.slice(1, 1+parseInt(options[0])))
+			}
 		}
 
         for (const coreClass of majorData1[majorKey]) {
@@ -187,9 +188,8 @@ for (const majorKey in majorData1) {
         }
     } else {
         let groupKey = `group${dataArray.length}`
-		console.log("elective:", majorData1[majorKey], majorData1[majorKey][0])
 		// ignore the url case for now
-		if (majorData1[majorKey].length === 1 || majorData1[majorKey].length > 30) {
+		if (majorData1[majorKey].length === 1 || majorData1[majorKey].length > 20) {
 			continue
 		}
 		// dataArray.push({key: groupKey, isGroup: true, text:`${majorKey}: choose ${majorData1[majorKey][0]}`})
@@ -266,7 +266,7 @@ function initDiagram() {
         .bind("isTreeExpanded", "expanded")  // the Shape will go around the TextBlock
 		.add(
 		new go.Shape('RoundedRectangle',
-			{ name: 'SHAPE', fill: 'white', strokeWidth: 0})
+			{ name: 'rectangle', fill: 'white', strokeWidth: 1})
 			// Shape.fill is bound to Node.data.color
 			.bind('fill', 'color'),
 		
