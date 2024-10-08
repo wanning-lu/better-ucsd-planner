@@ -1,7 +1,8 @@
 import courseData from '../data/CSE.json'
 import majorDataArray from '../data/CS26.json'
 import Dropdown from './Dropdown';
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import CourseViewer from './CourseViewer';
 
 
 let majorData = majorDataArray[0]
@@ -28,12 +29,31 @@ for (const majorKey in majorData) {
 }
 
 function Discover() {
+    const [popupContent, setPopupContent] = useState(null);
+
+    const openPopup = (content) => {
+        if (popupContent !== null) {
+            return
+        }
+
+        setPopupContent(content)
+    }
+
+    const closePopup = () => {
+        setPopupContent(null)
+    }
     
     return (
         <div>
-            <Dropdown classes={coreClasses} />
+            { popupContent &&
+                <div className="fixed w-5/6 h-5/6">
+                <div onClick={() => closePopup()}>close</div>
+                <CourseViewer selectedClass={popupContent['course_code']}/>
+                </div>
+            }
+            <Dropdown classes={coreClasses} openPopup={openPopup}/>
             {electiveClasses.map((elective) => (
-              <Dropdown classes={elective.slice(2)} numRequired={elective[1]} electiveName={elective[0]}/>
+              <Dropdown classes={elective.slice(2)} numRequired={elective[1]} electiveName={elective[0]} openPopup={openPopup}/>
             ))}
         </div>
     )
