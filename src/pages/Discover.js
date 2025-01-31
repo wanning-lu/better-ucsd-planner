@@ -1,9 +1,7 @@
-import courseData from '../data/CSE.json'
 import majorDataArray from '../data/CS26.json'
 import Dropdown from './Dropdown';
 import { useState } from 'react';
 import CourseViewer from './CourseViewer';
-
 
 let majorData = majorDataArray[0]
 // core classes should be its own dropdown, with one dropdown avail for each elective

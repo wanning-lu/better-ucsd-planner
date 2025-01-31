@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ClassInfo from './ClassInfo';
-import CourseViewer from './CourseViewer';
 
 function Dropdown(props) {
     const [open, setOpen] = useState(false);
@@ -8,20 +7,6 @@ function Dropdown(props) {
     const handleOpen = () => {
         setOpen(!open)
     }
-
-    // const [popupContent, setPopupContent] = useState(null);
-
-    // const openPopup = (content) => {
-    //     if (popupContent !== null) {
-    //         return
-    //     }
-
-    //     setPopupContent(content)
-    // }
-
-    // const closePopup = () => {
-    //     setPopupContent(null)
-    // }
 
     return (
         <>
