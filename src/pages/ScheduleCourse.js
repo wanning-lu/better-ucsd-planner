@@ -2,7 +2,7 @@ import courseData from '../data/CSE.json'
 import majorData from '../data/CS26.json'
 import React from 'react'
 import { SelectedCoursesContext } from '../App.js'
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { PlannedCoursesContext } from './Schedule.js';
 
 // needs a key, such as F24-1, where it denotes that it is the first course of Fall '24
@@ -12,16 +12,17 @@ function ScheduleCourse(props) {
     const { selectedCourses } = useContext(SelectedCoursesContext)
     const { plannedCourses, addPlanCourse, removePlanCourse } = useContext(PlannedCoursesContext)
 
-    const [selectedCourse, changeCourse] = useState("")
-
     let keyName = props.quarter + props.year + "-" + props.courseNumber;
-    
+
+    const [selectedCourse, changeCourse] = useState(JSON.parse(localStorage.getItem("selectedCourse-" + keyName)) || "")
+
     return (
         <div className="border-2 h-10">
             <select 
               value = {selectedCourse}
               onChange= {(e) => {
                   changeCourse(e.target.value);
+                  localStorage.setItem("selectedCourse-" + keyName, JSON.stringify(e.target.value));
 
                   if (e.target.value !== "") {
                     addPlanCourse(keyName, e.target.value)

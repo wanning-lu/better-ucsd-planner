@@ -10,16 +10,18 @@ import ScheduleYear from './ScheduleYear';
 export const PlannedCoursesContext = createContext();
 
 const PlannedCoursesProvider = ({ children }) => {
-    const [plannedCourses, planCourses] = useState({});
+    const [plannedCourses, planCourses] = useState(JSON.parse(localStorage.getItem("plannedCourses")) || {});
 
     const addPlanCourse = (key, newCourse) => {
         planCourses({...plannedCourses, [key]: newCourse})
+        localStorage.setItem("plannedCourses", JSON.stringify({...plannedCourses, [key]: newCourse}));
     }
 
     const removePlanCourse = (key) => {
         const copyPlannedCourses = {...plannedCourses}
         delete copyPlannedCourses[key]
         planCourses(copyPlannedCourses)
+        localStorage.setItem("plannedCourses", JSON.stringify(copyPlannedCourses));
     }
 
   return (
