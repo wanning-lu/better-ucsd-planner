@@ -9,14 +9,15 @@ import { PlannedCoursesContext } from './Schedule.js';
 function ScheduleYear(props) {
     const { plannedCourses, addPlanCourse, removePlanCourse } = useContext(PlannedCoursesContext)
 
+    console.log(plannedCourses)
+
     return (
         <>
-        <div>{Object.values(plannedCourses)}</div>
         <div className="w-full border-2 flex gap-4 h-auto">
-            <ScheduleQuarter/>
-            <ScheduleQuarter/>
-            <ScheduleQuarter/>
-            <ScheduleQuarter/>
+            <ScheduleQuarter year={props.year} quarter="FA"/>
+            <ScheduleQuarter year={props.year} quarter="WI"/>
+            <ScheduleQuarter year={props.year} quarter="SP"/>
+            <ScheduleQuarter year={props.year} quarter="SU"/>
         </div>
         </>
     )

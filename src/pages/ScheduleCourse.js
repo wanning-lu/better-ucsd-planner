@@ -8,14 +8,14 @@ import { PlannedCoursesContext } from './Schedule.js';
 // needs a key, such as F24-1, where it denotes that it is the first course of Fall '24
 // this allows it to be traceable in the main component, where we need to figure out if we want to add, delete, or modify
 
-function ScheduleCourse() {
+function ScheduleCourse(props) {
     const { selectedCourses } = useContext(SelectedCoursesContext)
     const { plannedCourses, addPlanCourse, removePlanCourse } = useContext(PlannedCoursesContext)
 
     const [selectedCourse, changeCourse] = useState("")
 
-    let keyName = "amongoo";
-
+    let keyName = props.quarter + props.year + "-" + props.courseNumber;
+    
     return (
         <div className="border-2 h-10">
             <select 

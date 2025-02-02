@@ -34,7 +34,7 @@ function Schedule() {
         <>
         <PlannedCoursesProvider>
             <div className="w-5/6 border-2 p-8">
-                <ScheduleYear/> 
+                <ScheduleYear year="24"/> 
             </div>
         </PlannedCoursesProvider>
         </>
