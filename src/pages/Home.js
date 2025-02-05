@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Schedule from './Schedule.js';
 
-const majors = ["major 1", "major 2"];
+const majors = ["cs major", "ece major"];
 
 function Home() {
   const [state, setValue] = useState({ type: 'major', value: 'none' });

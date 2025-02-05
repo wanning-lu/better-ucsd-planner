@@ -9,7 +9,25 @@ function Dropdown(props) {
         setOpen(!open)
     }
 
-    const { addCourse } = useContext(SelectedCoursesContext)
+    const { selectedCourses, addCourse } = useContext(SelectedCoursesContext)
+
+    // show how many selected courses satsify the current requirement
+    let numFulfilled = 0
+    for (let selectedCourse of selectedCourses) {
+        if (!props.electiveName) {
+            for (let coreClassArray of props.classes) {
+                if (coreClassArray.includes(selectedCourse)) {
+                    numFulfilled += 1
+                    break
+                }
+            }
+        } else {
+            if (props.classes.includes(selectedCourse)) {
+                numFulfilled += 1
+                continue
+            }
+        }
+    }
 
     // this ensures that the single core classes show up first
     // then, the ones with multiple options show up later
@@ -28,8 +46,8 @@ function Dropdown(props) {
                 ) : <>{'> '}</>}
                 {/* title of the dropdown and num classes for the requirement */}
                 {props.electiveName ? (
-                    <>{props.electiveName} ({props.numRequired})</>
-                ) : <>Core Requirements ({props.classes.length})</>}
+                    <>{props.electiveName} ({numFulfilled} / {props.numRequired})</>
+                ) : <>Core Requirements ({numFulfilled} / {props.classes.length})</>}
             </div>
         </div>
         

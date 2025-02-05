@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FC } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
-const majors: string[] = ["major 1", "major 2"];
+const majors: string[] = ["cs major :(", "ece major"];
 
 interface State {
   type: string;
