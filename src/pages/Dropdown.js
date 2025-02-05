@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ClassInfo from './ClassInfo';
+import { SelectedCoursesContext } from '../App.js'
 
 function Dropdown(props) {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(!open)
+    }
+
+    const { addCourse } = useContext(SelectedCoursesContext)
+
+    // this ensures that the single core classes show up first
+    // then, the ones with multiple options show up later
+    if (!props.electiveName) {
+        props.classes.sort((a, b) => a.length - b.length);
     }
 
     return (
@@ -25,21 +34,42 @@ function Dropdown(props) {
         </div>
         
         {/* rendering for core classes */}
-  
-        <div className={open && !props.electiveName ? "" : "hidden"}>
-        {props.classes.map((classInfo) => (
-            <label for={classInfo} className="block">
-            <input type="checkbox" name={classInfo} value={classInfo}/>
-            {" " + classInfo}
-            </label>
-        ))}
-        </div>
+        {props.electiveName ? "" : 
+            <div className={open ? "" : "hidden"}>
+            {props.classes.map((classInfo) => {
+                if (classInfo.length === 1) {
+                    // add these to the selected courses since they're mandatory
+                    addCourse(classInfo[0])
+                    return (
+                        <ClassInfo classCode={classInfo[0]} onOpenPopup={props.openPopup} />
+                    )
+                } else {
+                    return (
+                        <>
+                        <hr></hr>
+                        <div>Choose one:</div>
+                        {classInfo.map((coreClassInfo) => (
+                            <>
+                            <div className="w-4 inline-block"></div>
+                            <ClassInfo classCode={coreClassInfo} onOpenPopup={props.onOpenPopup}/>
+                            </>
+                        ))}
+                        <hr></hr>
+                        </>
+                    )
+                }
+            })}
+            </div>
+        }
+
         {/* rendering for elective classes */}
-        <div className={open && props.electiveName ? "" : "hidden"}>
-        {props.classes.map((classInfo) => (
-            <ClassInfo classCode={classInfo} onOpenPopup={props.openPopup}/>
-        ))}
-        </div>
+        {!props.electiveName ? "" :
+            <div className={open ? "" : "hidden"}>
+            {props.classes.map((classInfo) => (
+                <ClassInfo classCode={classInfo} onOpenPopup={props.openPopup}/>
+            ))}
+            </div>
+        }
         </div>
         </>
     )

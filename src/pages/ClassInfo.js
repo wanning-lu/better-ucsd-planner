@@ -32,7 +32,7 @@ function ClassInfo(props) {
                 removeCourse(props.classCode)
             }
         }}/>
-        <div className="inline-block" onClick={handleOpen}>{" " + props.classCode + ": " + classData['course_name']}</div>
+        <div className="inline-block ml-1" onClick={handleOpen}>{" " + props.classCode + ": " + classData['course_name']}</div>
         <div className="w-3/4">
         {open ? ( 
             <>
