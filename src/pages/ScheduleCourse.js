@@ -17,7 +17,6 @@ function ScheduleCourse(props) {
     const [selectedCourse, changeCourse] = useState(JSON.parse(localStorage.getItem("selectedCourse-" + keyName)) || "")
 
     useEffect(() => {
-      // force a reload of components?
     }, [plannedCourses]);
 
     return (
@@ -35,10 +34,11 @@ function ScheduleCourse(props) {
                   }
                 }
               }
-              className="block w-32 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className={ (keyName in plannedCourses && plannedCourses[keyName].status === 'red' ? "bg-red-400 " : "") + "block w-32 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              }
             >
             {selectedCourses.map((course) => {
-              if (typeof plannedCourses === 'undefined' || course === selectedCourse || !(Object.values(plannedCourses).includes(course))) {
+              if (typeof plannedCourses === 'undefined' || course === selectedCourse || !(Object.values(plannedCourses).map(obj => obj.courseName).includes(course))) {
                 return (<option value={course}>{course}</option>)
               }
             })}

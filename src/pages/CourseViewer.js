@@ -150,77 +150,11 @@ for (const coreClass of majorData1['core_classes']) {
 	}
 }
 
-/**** IMPLEMENTATION FOR MULTIPLE COURSES BELOW ****/
-// let majorData1 = majorData[0]
-// for (const majorKey in majorData1) {
-//     if (majorKey === 'name' || majorKey === 'code') {
-//         continue
-//     }
-
-//     if (majorKey === 'core_classes') {
-//         // let's sort the core classes by their number part of the code
-//         // for example, 10, 110, 190 should sort into 190, 110, 10
-//         majorData1[majorKey] = majorData1[majorKey].sort((a,b) => a.substring(a.search(/[0-9]/)).localeCompare(b.substring(b.search(/[0-9]/))))
-
-// 		let coreKey = `group${dataArray.length}`
-// 		dataArray.push({key: coreKey, isGroup: true, text: "core requirements"})
-
-// 		// refer to coreClasses declaration above
-// 		for (const coreClass of majorData1[majorKey]) {
-// 			let options = coreClass.split(' or ')
-// 			if (options.length === 1) {
-// 				coreClasses.push(options[0])
-// 			} else {
-// 				// the first element is the number of "recommended" courses, which are all placed in the front
-// 				coreClasses = coreClasses.concat(options.slice(1, 1+parseInt(options[0])))
-// 			}
-// 		}
-
-//         for (const coreClass of majorData1[majorKey]) {
-//             let options = coreClass.split(' or ')
-
-//             if (options.length === 1) {
-//                 let coreClassData = courseData.filter(obj => obj.course_code === coreClass)[0]
-//                 if (dataArray.filter(obj => obj.text === coreClass).length === 0) {
-//                     // if not, let's add it and its prerequisites
-//                     let rootNode = initNode(null, coreClassData, coreKey, dataArray.length)
-//                     dataArray.push(rootNode)
-                    
-//                     coreClassData.prerequisites.forEach(function (prereq) {
-//                         buildGraph(rootNode, prereq, null, dataArray, linkArray);
-//                     })
-//                 }
-//             } else {
-//                 let groupKey = `group${dataArray.length}`
-//                 dataArray.push({key: groupKey, isGroup: true, text:`choose one`, group: coreKey})
-//                 options.forEach(function (elective) {
-//                     buildGraph(null, [elective], groupKey, dataArray, linkArray)
-// 				})
-//             }
-//         }
-//     } else {
-//         let groupKey = `group${dataArray.length}`
-// 		// ignore the url case for now
-// 		if (majorData1[majorKey].length === 1 || majorData1[majorKey].length > 20) {
-// 			continue
-// 		}
-// 		// dataArray.push({key: groupKey, isGroup: true, text:`${majorKey}: choose ${majorData1[majorKey][0]}`})
-//         // majorData1[majorKey].forEach(function (elective) {
-// 		// 	buildGraph(null, [elective], groupKey, dataArray, linkArray)
-// 		// })
-//     }
-// }
-
 function removePart(diagram) {
 	diagram.parts.each( function(n) {diagram.remove(n)})
 }
 
 function showNodeInfo(node, diagram) {
-	// Clear any existing info windows
-	// console.log(diagram.findPartForKey("info"))
-	// if (diagram.findPartForData({category: "infoWindow"}) != null) {
-	// 	diagram.remove(diagram.findPartForData({category: "infoWindow"}))
-	// }
 
 	diagram.parts.each( function(n) {diagram.remove(n)})
   	
