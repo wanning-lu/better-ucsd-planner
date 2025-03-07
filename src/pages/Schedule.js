@@ -86,6 +86,9 @@ const PlannedCoursesProvider = ({ children }) => {
     }
 
     const removePlanCourse = (key) => {
+        if (!(key in plannedCourses)) {
+            return
+        }
         const removedCourse = plannedCourses[key].courseName
         let copyPlannedCourses = {...plannedCourses}
         

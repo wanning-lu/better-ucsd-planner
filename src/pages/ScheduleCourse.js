@@ -28,6 +28,7 @@ function ScheduleCourse(props) {
                   localStorage.setItem("selectedCourse-" + keyName, JSON.stringify(e.target.value));
 
                   if (e.target.value !== "") {
+                    removePlanCourse(keyName)
                     addPlanCourse(keyName, e.target.value)
                   } else {
                     removePlanCourse(keyName)
