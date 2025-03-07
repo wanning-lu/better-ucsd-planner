@@ -2,7 +2,7 @@ import React from 'react'
 import * as go from 'gojs'
 import { ReactDiagram } from 'gojs-react'
 
-import './App.css';  // contains .diagram-component CSS
+// import './App.css';  // contains .diagram-component CSS
 import courseData from '../data/CSE.json'
 import majorData from '../data/CS26.json'
 
@@ -49,6 +49,10 @@ function initNode(parent, nodeInfo, group, randomNumber) {
 	return node;
 }
 
+/**
+ * Checks if the given class is a core requirement of the major
+ * @param {Object} node 
+ */
 function checkNodesAreCore(node) {
 	if (node === null) {
 		return true
@@ -64,6 +68,11 @@ function checkNodesAreCore(node) {
 	}
 }
 
+/**
+ * 
+ * @param {*} node 
+ * @param {*} checked 
+ */
 function expandCoreNodes(node, checked) {
 	// first see if all the nodes in the parent tree
 	if (!checked && !checkNodesAreCore(node)) {
@@ -283,6 +292,7 @@ function CourseViewer(props) {
 			initDiagram={initDiagram}
 			nodeDataArray={dataArray}
 			linkDataArray={linkArray}
+			className="w-screen h-[75vh] border border-black bg-white"
 			// onModelChange={handleModelChange}
 		/>
 		</div>

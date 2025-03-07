@@ -8,6 +8,7 @@ let majorData = majorDataArray[0]
 let coreClasses = []
 let electiveClasses = []
 
+// build core classes array and electives array
 for (const majorKey in majorData) {
     if (majorKey === 'name' || majorKey === 'code') {
         continue
