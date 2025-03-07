@@ -2,7 +2,7 @@ import React from 'react'
 import * as go from 'gojs'
 import { ReactDiagram } from 'gojs-react'
 
-// import './App.css';  // contains .diagram-component CSS
+import './App.css';  // contains .diagram-component CSS
 import courseData from '../data/CSE.json'
 import majorData from '../data/CS26.json'
 
@@ -292,7 +292,6 @@ function CourseViewer(props) {
 			initDiagram={initDiagram}
 			nodeDataArray={dataArray}
 			linkDataArray={linkArray}
-			className="w-screen h-[75vh] border border-black bg-white"
 			// onModelChange={handleModelChange}
 		/>
 		</div>

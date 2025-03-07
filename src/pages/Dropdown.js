@@ -69,7 +69,7 @@ function Dropdown(props) {
                         {classInfo.map((coreClassInfo) => (
                             <>
                             <div className="w-4 inline-block"></div>
-                            <ClassInfo classCode={coreClassInfo} onOpenPopup={props.onOpenPopup}/>
+                            <ClassInfo classCode={coreClassInfo} onOpenPopup={props.openPopup}/>
                             </>
                         ))}
                         <hr></hr>
