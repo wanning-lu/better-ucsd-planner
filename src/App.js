@@ -7,7 +7,6 @@ import { createContext, useState } from 'react';
 export const SelectedCoursesContext = createContext();
 
 function sortSelectedCourses(a, b) {
-	
 	const [nameA, numA] = a.split(' ');
 	const [nameB, numB] = b.split(' ');
 	

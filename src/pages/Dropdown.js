@@ -38,7 +38,7 @@ function Dropdown(props) {
     return (
         <>
         <div className="w-5/6 mx-auto">
-        <div className="p-2 rounded-md cursor-pointer hover:bg-stone-100" onClick={handleOpen}>
+        <div className="p-2 rounded-md cursor-pointer hover:bg-slate-100" onClick={handleOpen}>
             <div>
                 {/* placeholder for an icon LOL */}
                 {open ? (
