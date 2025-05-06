@@ -1,5 +1,3 @@
-import courseData from '../data/CSE.json'
-import majorData from '../data/CS26.json'
 import React from 'react'
 import ScheduleCourse from './ScheduleCourse'
 

@@ -11,7 +11,7 @@ function ClassInfo(props) {
     // Retrieve the class object from our data
     // If it doesn't exist, we just a placeholder first
     let classData = {}
-    if (courseData.filter(obj => obj.course_code === props.classCode).length == 0) {
+    if (courseData.filter(obj => obj.course_code === props.classCode).length === 0) {
         classData = {'course_code': 'BLAH XXX', 'course_name': 'BLAH', 'units': 69, 'desc': 'BLAH'}
     } else {
         classData = courseData.filter(obj => obj.course_code === props.classCode)[0]

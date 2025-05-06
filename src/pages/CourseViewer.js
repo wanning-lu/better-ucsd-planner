@@ -279,7 +279,7 @@ function CourseViewer(props) {
 	dataArray = []
 	linkArray = []
 
-	if (courseData.filter(obj => obj.course_code === props.selectedClass).length == 0) {
+	if (courseData.filter(obj => obj.course_code === props.selectedClass).length === 0) {
 		dataArray.push({key: 1, text: "select a class to see its prerequisites!"})
 	} else {
 		let classData = courseData.filter(obj => obj.course_code === props.selectedClass)[0]

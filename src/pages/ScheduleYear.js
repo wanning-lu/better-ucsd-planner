@@ -1,13 +1,7 @@
-import courseData from '../data/CSE.json'
-import majorData from '../data/CS26.json'
 import React from 'react'
 import ScheduleQuarter from './ScheduleQuarter'
 
-import { useContext, useState, useEffect } from 'react';
-import { PlannedCoursesContext } from './Schedule.js';
-
 function ScheduleYear(props) {
-    const { plannedCourses, addPlanCourse, removePlanCourse } = useContext(PlannedCoursesContext)
 
     return (
         <>

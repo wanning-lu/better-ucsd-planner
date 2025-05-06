@@ -1,7 +1,6 @@
 import courseData from '../data/CSE.json'
-import majorData from '../data/CS26.json'
 import React from 'react'
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext } from 'react';
 import ScheduleYear from './ScheduleYear';
 
 // this component will hold the array of current classes added to the schedule
@@ -33,7 +32,7 @@ const PlannedCoursesProvider = ({ children }) => {
         let copyPlannedCourses;
 
         // default options if a course doesn't exist in database yet
-        if (currentCourseData.length == 0) {
+        if (currentCourseData.length === 0) {
             planCourses({...plannedCourses,
                 [key]: {'courseName': newCourse, 'status': 'green', 'prereqsNeeded': []}})
             localStorage.setItem("plannedCourses", {...plannedCourses,
@@ -42,7 +41,7 @@ const PlannedCoursesProvider = ({ children }) => {
         }
 
         let afterCurrentCourse = false
-        if (currentCourseData[0].prerequisites.length == 0) {
+        if (currentCourseData[0].prerequisites.length === 0) {
             copyPlannedCourses = {...plannedCourses, 
                 [key]: {'courseName': newCourse, 'status': 'green', 'prereqsNeeded': currentCourseData[0].prerequisites}}
         } else {

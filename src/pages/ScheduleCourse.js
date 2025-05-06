@@ -1,5 +1,3 @@
-import courseData from '../data/CSE.json'
-import majorData from '../data/CS26.json'
 import React from 'react'
 import { SelectedCoursesContext } from '../App.js'
 import { useContext, useState, useEffect } from 'react';
@@ -41,6 +39,8 @@ function ScheduleCourse(props) {
               {selectedCourses.map((course) => {
                 if (typeof plannedCourses === 'undefined' || course === selectedCourse || !(Object.values(plannedCourses).map(obj => obj.courseName).includes(course))) {
                   return (<option value={course}>{course}</option>)
+                } else {
+                  return (<></>)
                 }
               })}
             </select>
