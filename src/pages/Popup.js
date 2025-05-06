@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import { SelectedCoursesContext } from '../App.js'
+import CourseViewer from './CourseViewer';
 
 function Popup() {
+    const { selectedCourses } = useContext(SelectedCoursesContext)
     const [isOpened, setOpenPopup] = useState(false);
 
+    const [courseViewed, changeCourseView] = useState("none")
+
+    // using React state to change max height, allows for smooth transition
     const arrowRef = useRef(null);
     const [height, setHeight] = useState("0px");
     useEffect(() => {
@@ -15,12 +21,20 @@ function Popup() {
         }
       }, [isOpened]);
 
-      // (isOpened ? "max-h-screen " : "max-h-0 ") + 
-
     return (
         <div className="w-screen flex flex-col items-center fixed bottom-0 left-0">
             <div className="w-20 bg-gray-300 text-center rounded-t-md hover:cursor-pointer" onClick={() => setOpenPopup(!isOpened)}>^</div>
-            <div ref={arrowRef} style={{ maxHeight: height }} className={"transition-all duration-300 ease-out"}>hewwo<br></br>hewwo<br></br>hewwo</div>
+            <div ref={arrowRef} style={{ maxHeight: height }} className="transition-all duration-300 ease-out w-full flex">
+                <div className="w-[20vw]">part 1</div>
+                <div className="w-[80vw] relative">
+                    <select onChange={(e) => {changeCourseView(e.target.value)}}className="absolute top-5 left-5 z-10 rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                        {selectedCourses.map((course) => {
+                            return (<option value={course}>{course}</option>)
+                        })}
+                    </select>
+                    <CourseViewer selectedClass={courseViewed}/>
+                </div>
+            </div>
         </div>
     )
 }

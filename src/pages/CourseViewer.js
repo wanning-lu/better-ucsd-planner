@@ -278,13 +278,18 @@ function initDiagram() {
 function CourseViewer(props) {
 	dataArray = []
 	linkArray = []
-	let classData = courseData.filter(obj => obj.course_code === props.selectedClass)[0]
-	dataArray.push(initNode(null, classData, null, 1))
-	dataArray[0].expanded = true
-	classData['prerequisites'].forEach(function (prereq) {
-		buildGraph(dataArray[0], prereq, null, dataArray, linkArray);
-	})
 
+	if (courseData.filter(obj => obj.course_code === props.selectedClass).length == 0) {
+		dataArray.push({key: 1, text: "select a class to see its prerequisites!"})
+	} else {
+		let classData = courseData.filter(obj => obj.course_code === props.selectedClass)[0]
+		dataArray.push(initNode(null, classData, null, 1))
+		dataArray[0].expanded = true
+		classData['prerequisites'].forEach(function (prereq) {
+			buildGraph(dataArray[0], prereq, null, dataArray, linkArray);
+		})
+	}
+	
 	return (
 		<div>
 		<ReactDiagram
