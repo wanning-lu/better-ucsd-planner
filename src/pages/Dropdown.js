@@ -2,6 +2,10 @@ import { useState, useContext } from 'react';
 import ClassInfo from './ClassInfo';
 import { SelectedCoursesContext } from '../App.js'
 
+/**
+ * A component representing each category of major requirement
+ * For example, core vs. system elective
+ */
 function Dropdown(props) {
     const [open, setOpen] = useState(false);
 
@@ -68,7 +72,7 @@ function Dropdown(props) {
                         <div>Choose one:</div>
                         {classInfo.map((coreClassInfo) => (
                             <>
-                            <div className="w-4 inline-block"></div>
+                            <div className="inline-block w-4"></div>
                             <ClassInfo classCode={coreClassInfo} onOpenPopup={props.openPopup}/>
                             </>
                         ))}

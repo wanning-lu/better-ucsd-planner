@@ -27,7 +27,11 @@ for (const majorKey in majorData) {
     }
 }
 
+/**
+ * Overall discover page
+ */
 function Discover() {
+    // for the course viewer graph
     const [popupContent, setPopupContent] = useState(null);
 
     const openPopup = (content) => {

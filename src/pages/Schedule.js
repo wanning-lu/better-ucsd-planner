@@ -3,8 +3,9 @@ import React from 'react'
 import { useState, createContext } from 'react';
 import ScheduleYear from './ScheduleYear';
 
-// this component will hold the array of current classes added to the schedule
-// will also show the courses left
+/** 
+ * This component will hold the array of current classes added to the schedule
+ */
 
 export const PlannedCoursesContext = createContext();
 
@@ -127,7 +128,7 @@ function Schedule() {
     return (
         <>
         <PlannedCoursesProvider>
-            <div className="w-5/6 border-2 p-8">
+            <div className="w-5/6 p-8 border-2">
                 <ScheduleYear year="24"/> 
                 <ScheduleYear year="25"/> 
                 <ScheduleYear year="26"/> 

@@ -4,6 +4,9 @@ import Popup from './Popup.js';
 
 const majors = ["cs major", "ece major"];
 
+/**
+ * Overall planner page
+ */
 function Home() {
   const [major, setMajor] = useState('none');
 

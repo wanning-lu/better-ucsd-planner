@@ -7,6 +7,10 @@ import courseData from '../data/CSE.json'
 import majorData from '../data/CS26.json'
 
 /**
+ * This is the component for the course prerequisite viewer.
+ */
+
+/**
  * Adds information to the Node object to initialize it, including its key property 
  * and text.
  * @param {Object} parent     The parent of the node to be initialized.
@@ -69,7 +73,7 @@ function checkNodesAreCore(node) {
 }
 
 /**
- * 
+ * Expands node if it is a core class
  * @param {*} node 
  * @param {*} checked 
  */
