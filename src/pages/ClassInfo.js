@@ -25,7 +25,7 @@ function ClassInfo(props) {
     
     // Add course to the wishlist
     let isSelected = false;
-    if (selectedCourses.includes(props.classCode)) {
+    if (props.classCode in selectedCourses) {
         isSelected = true;
     }
 
@@ -33,7 +33,7 @@ function ClassInfo(props) {
         <>
         <input type="checkbox" name={props.classCode} value={props.classCode} checked={isSelected} onChange={e => {
             if (e.target.checked) {
-                addCourse(props.classCode)
+                addCourse(props.classCode, props.category)
             } else {
                 removeCourse(props.classCode)
             }

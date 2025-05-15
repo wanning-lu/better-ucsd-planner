@@ -6,44 +6,32 @@ import { createContext, useState } from 'react';
 
 export const SelectedCoursesContext = createContext();
 
-function sortSelectedCourses(a, b) {
-	const [nameA, numA] = a.split(' ');
-	const [nameB, numB] = b.split(' ');
-	
-	// compare course letters
-	if (nameA < nameB) return -1;
-	if (nameA > nameB) return 1;
-	
-	// check first that the number isn't something like "20A"
-	if (isNaN(numA) || isNaN(numB)) {
-		if (numA < numB) return -1;
-		if (numA > numB) return 1;
-	}
+// TODO: find where we sort the courses; otherwise, can just use Object.keys()
 
-	// sort numerically
-	return parseInt(numA) - parseInt(numB);
-}
 
 const SelectedCoursesProvider = ({ children }) => {
-	const [selectedCourses, setCourses] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || [""]);
+	const [selectedCourses, setCourses] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || {[""]: "none"});
 
-	const addCourse = (newCourse) => {
+	const addCourse = (newCourse, category) => {
 		// we don't want duplicates
-		if (selectedCourses.includes(newCourse)) {
+		if (newCourse in selectedCourses) {
 			return
 		}
-		let newCourseArray = [...selectedCourses, newCourse].sort(sortSelectedCourses)
-		setCourses(newCourseArray)
-		localStorage.setItem("wishlistedCourses", JSON.stringify(newCourseArray));
+
+		// let newCourseArray = [...selectedCourses, newCourse].sort(sortSelectedCourses)
+		setCourses({...selectedCourses, [newCourse]: category})
+		console.log("huh?")
+		localStorage.setItem("wishlistedCourses", JSON.stringify({...selectedCourses, [newCourse]: category}));
 	}
 
 	const removeCourse = (removedCourse) => {
-		setCourses(selectedCourses.filter((course) => {
-			return course !== removedCourse
-		}))
-		localStorage.setItem("wishlistedCourses", JSON.stringify(selectedCourses.filter((course) => {
-			return course !== removedCourse
-		})));
+		if (!(removedCourse in selectedCourses)) {
+			return
+		}
+		let copySelectedCourses = {...selectedCourses}
+		delete copySelectedCourses[removedCourse]
+		setCourses(copySelectedCourses)
+		localStorage.setItem("wishlistedCourses", JSON.stringify(copySelectedCourses))
 	}
 
   return (

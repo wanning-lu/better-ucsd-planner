@@ -17,7 +17,7 @@ function Dropdown(props) {
 
     // show how many selected courses satsify the current requirement
     let numFulfilled = 0
-    for (let selectedCourse of selectedCourses) {
+    for (let selectedCourse of Object.keys(selectedCourses)) {
         if (!props.electiveName) {
             for (let coreClassArray of props.classes) {
                 if (coreClassArray.includes(selectedCourse)) {
@@ -61,7 +61,7 @@ function Dropdown(props) {
             {props.classes.map((classInfo) => {
                 if (classInfo.length === 1) {
                     // add these to the selected courses since they're mandatory
-                    addCourse(classInfo[0])
+                    addCourse(classInfo[0], "Core")
                     return (
                         <ClassInfo classCode={classInfo[0]} onOpenPopup={props.openPopup} />
                     )
@@ -73,7 +73,7 @@ function Dropdown(props) {
                         {classInfo.map((coreClassInfo) => (
                             <>
                             <div className="inline-block w-4"></div>
-                            <ClassInfo classCode={coreClassInfo} onOpenPopup={props.openPopup}/>
+                            <ClassInfo classCode={coreClassInfo} category={"Core"} onOpenPopup={props.openPopup}/>
                             </>
                         ))}
                         <hr></hr>
@@ -88,7 +88,7 @@ function Dropdown(props) {
         {!props.electiveName ? "" :
             <div className={open ? "" : "hidden"}>
             {props.classes.map((classInfo) => (
-                <ClassInfo classCode={classInfo} onOpenPopup={props.openPopup}/>
+                <ClassInfo classCode={classInfo} category={props.electiveName} onOpenPopup={props.openPopup}/>
             ))}
             </div>
         }
