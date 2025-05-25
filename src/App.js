@@ -2,12 +2,11 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout"
 import Discover from "./pages/Discover";
+import Welcome from "./pages/Welcome";
 import { createContext, useState } from 'react';
 
 export const SelectedCoursesContext = createContext();
-
-// TODO: find where we sort the courses; otherwise, can just use Object.keys()
-
+export const SelectedInfoContext = createContext();
 
 const SelectedCoursesProvider = ({ children }) => {
 	const [selectedCourses, setCourses] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || {[""]: "none"});
@@ -20,8 +19,7 @@ const SelectedCoursesProvider = ({ children }) => {
 
 		// let newCourseArray = [...selectedCourses, newCourse].sort(sortSelectedCourses)
 		setCourses({...selectedCourses, [newCourse]: category})
-		console.log("huh?")
-		localStorage.setItem("wishlistedCourses", JSON.stringify({...selectedCourses, [newCourse]: category}));
+		localStorage.setItem("wishlistedCourses", JSON.stringify({...selectedCourses, [newCourse]: category}))
 	}
 
 	const removeCourse = (removedCourse) => {
@@ -41,19 +39,38 @@ const SelectedCoursesProvider = ({ children }) => {
   );
 };
 
+// "info" includes major and college
+const SelectedInfoProvider = ({ children }) => {
+	const [selectedInfo, setInfo] = useState(JSON.parse(localStorage.getItem("selectedInfo")) || {major: 'none', college: 'none'})
+
+	const changeInfo = (category, value) => {
+		setInfo({...selectedInfo, [category]: value})
+		localStorage.setItem("selectedInfo", JSON.stringify({...selectedInfo, [category]: value}))
+	}
+
+	return (
+		<SelectedInfoContext.Provider value={{ selectedInfo, changeInfo }}>
+			{children}
+		</SelectedInfoContext.Provider>
+	)
+}
+
 
 function App() {
   return (
+		<SelectedInfoProvider>
 		<SelectedCoursesProvider>
 			<BrowserRouter>
 				<Routes>
-						<Route path="/" element={<Layout />}>
-							<Route index element={<Home />} />
-							<Route path="discover" element={<Discover />} />
-						</Route>
+					<Route path="/" element={<Layout />}>
+						<Route index element={<Welcome />} />
+						<Route path="planner" element={<Home />} />
+						<Route path="discover" element={<Discover />} />
+					</Route>
 				</Routes>
 			</BrowserRouter>
 		</SelectedCoursesProvider>
+		</SelectedInfoProvider>
   );
 }
 
