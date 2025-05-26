@@ -8,7 +8,8 @@ import majorDataArray from '../data/CS26.json'
  * Popup that displays remaining course + course graph information on planner page
  */
 function Popup() {
-    const { selectedCourses } = useContext(SelectedCoursesContext)
+    const { selectedCoursesObj } = useContext(SelectedCoursesContext)
+    const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
     const { plannedCourses }  = useContext(PlannedCoursesContext)
     const [isOpened, setOpenPopup] = useState(false);
 

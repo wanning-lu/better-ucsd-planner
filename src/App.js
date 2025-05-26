@@ -4,28 +4,68 @@ import Layout from "./pages/Layout"
 import Discover from "./pages/Discover";
 import Welcome from "./pages/Welcome";
 import { createContext, useState } from 'react';
+import courseData from './data/CSE.json'
 
 export const SelectedCoursesContext = createContext();
 export const SelectedInfoContext = createContext();
 
 const SelectedCoursesProvider = ({ children }) => {
-	const [selectedCourses, setCourses] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || {[""]: "none"});
+	const [ selectedCourses, setCourses ] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || {[""]: "none"});
+	const [ totalUnits, setUnits ] = useState(localStorage.getItem("totalUnits") || 0)
+	const [ totalUpperUnits, setUpperUnits ] = useState(localStorage.getItem("totalUpperUnits" || 0))
+
+	const getUnits = (courseCode) => {
+		let units
+		if (courseData.filter(obj => obj.course_code === courseCode).length !== 0) {
+			units = courseData.filter(obj => obj.course_code === courseCode)[0].units
+		} else {
+			units = 4 // if we haven't gotten this data yet, default to 4
+		}
+		return units
+	}
 
 	const addCourse = (newCourse, category) => {
-		// we don't want duplicates
-		if (newCourse in selectedCourses) {
-			return
-		}
+		
+		setCourses(prev => {
+			// we need to put everything into this state setter
+			// since the state variable is pretty funky with updating
+			// the local storage is a hacky way to stop it from resetting at
+			// the second loop of inputting the core classes
+			if (newCourse in prev || 
+				(JSON.parse(localStorage.getItem("wishlistedCourses") !== null && newCourse in JSON.parse(localStorage.getItem("wishlistedCourses"))))) {
+				return JSON.parse(localStorage.getItem("wishlistedCourses"))
+			}
 
-		// let newCourseArray = [...selectedCourses, newCourse].sort(sortSelectedCourses)
-		setCourses({...selectedCourses, [newCourse]: category})
-		localStorage.setItem("wishlistedCourses", JSON.stringify({...selectedCourses, [newCourse]: category}))
+			// get course units for the next step
+			const units = getUnits(newCourse)
+
+			// checking if the course is an upper div by looking at its number
+			const [_, courseNumber] = newCourse.split(' ')
+			if (courseNumber.length === 3 && !isNaN(courseNumber)) {
+				setUpperUnits(prevUnits => {localStorage.setItem("totalUpperUnits", prevUnits + units); return (prevUnits + parseInt(units))})
+			}
+
+			setUnits(prevUnits => {localStorage.setItem("totalUnits", prevUnits + units); return (prevUnits + parseInt(units))})
+			const newState = {...prev, [newCourse]: category}
+			localStorage.setItem("wishlistedCourses", JSON.stringify(newState))
+			return ({...prev, [newCourse]: category})
+		})
 	}
 
 	const removeCourse = (removedCourse) => {
 		if (!(removedCourse in selectedCourses)) {
 			return
 		}
+
+		const units = getUnits(removedCourse)
+		const [_, courseNumber] = removedCourse.split(' ')
+		if (courseNumber.length === 3 && !isNaN(courseNumber)) {
+			setUpperUnits(totalUpperUnits - units)
+			localStorage.setItem("totalUpperUnits", totalUpperUnits - units)
+		}
+		setUnits(totalUnits - units)
+		localStorage.setItem("totalUnits", totalUnits - units)
+
 		let copySelectedCourses = {...selectedCourses}
 		delete copySelectedCourses[removedCourse]
 		setCourses(copySelectedCourses)
@@ -33,7 +73,7 @@ const SelectedCoursesProvider = ({ children }) => {
 	}
 
   return (
-    <SelectedCoursesContext.Provider value={{ selectedCourses, addCourse, removeCourse }}>
+    <SelectedCoursesContext.Provider value={{ selectedCoursesObj: [selectedCourses, addCourse, removeCourse] }}>
       {children}
     </SelectedCoursesContext.Provider>
   );

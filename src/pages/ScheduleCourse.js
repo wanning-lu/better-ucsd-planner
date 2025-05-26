@@ -26,7 +26,8 @@ function sortSelectedCourses(a, b) {
  * Represents each course slot in the planner
  */
 function ScheduleCourse(props) {
-    const { selectedCourses } = useContext(SelectedCoursesContext)
+    const { selectedCoursesObj } = useContext(SelectedCoursesContext)
+    const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
     const { plannedCourses, addPlanCourse, removePlanCourse } = useContext(PlannedCoursesContext)
 
     // needs a key, such as F24-1, where it denotes that it is the first course of Fall '24

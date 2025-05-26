@@ -7,8 +7,6 @@ import Popup from './Popup.js';
  * Component that holds the array of planned courses
  */
 
-const majors = ["cs major", "ece major"];
-
 export const PlannedCoursesContext = createContext();
 
 function quarterSort(a,b) {
@@ -129,7 +127,6 @@ const PlannedCoursesProvider = ({ children }) => {
  * Overall planner page
  */
 function Home() {
-  const [major, setMajor] = useState('none');
 
   return (
     <>

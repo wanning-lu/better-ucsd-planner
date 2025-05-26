@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import ClassInfo from './ClassInfo';
 import { SelectedCoursesContext } from '../App.js'
 
@@ -13,7 +13,8 @@ function Dropdown(props) {
         setOpen(!open)
     }
 
-    const { selectedCourses, addCourse } = useContext(SelectedCoursesContext)
+    const { selectedCoursesObj } = useContext(SelectedCoursesContext)
+    const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
 
     // show how many selected courses satsify the current requirement
     let numFulfilled = 0
@@ -32,6 +33,21 @@ function Dropdown(props) {
             }
         }
     }
+
+    useEffect(() => {
+			if (localStorage.getItem("isCoreInit") !== null && localStorage.getItem("isCoreInit")) {
+				return
+			}
+      for (const courseInfo of props.classes) {
+        if (courseInfo.length === 1) {
+            if (courseInfo[0] in selectedCourses) {
+                break
+            }
+            addCourse(courseInfo[0], "Core")
+        }
+      }
+			localStorage.setItem("isCoreInit", true)
+    }, [])
 
     // this ensures that the single core classes show up first
     // then, the ones with multiple options show up later
@@ -61,9 +77,8 @@ function Dropdown(props) {
             {props.classes.map((classInfo) => {
                 if (classInfo.length === 1) {
                     // add these to the selected courses since they're mandatory
-                    addCourse(classInfo[0], "Core")
                     return (
-                        <ClassInfo classCode={classInfo[0]} onOpenPopup={props.openPopup} />
+                        <ClassInfo classCode={classInfo[0]} category={"Core"} onOpenPopup={props.openPopup} />
                     )
                 } else {
                     return (

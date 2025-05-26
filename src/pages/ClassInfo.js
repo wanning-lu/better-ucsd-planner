@@ -6,7 +6,8 @@ import { SelectedCoursesContext } from '../App.js'
  * Component for each individual class in 'Discover'
  */
 function ClassInfo(props) {
-    const { selectedCourses, addCourse, removeCourse } = useContext(SelectedCoursesContext)
+    const { selectedCoursesObj } = useContext(SelectedCoursesContext)
+    const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
     
     // Retrieve the class object from our data
     // If it doesn't exist, we just a placeholder first
