@@ -1,7 +1,7 @@
 import React from 'react'
 import { SelectedCoursesContext } from '../App.js'
 import { useContext, useState, useEffect } from 'react';
-import { PlannedCoursesContext } from './Home.js';
+import { PlannedCoursesContext } from '../App.js';
 import { Popover, PopoverHandler, PopoverContent } from '@material-tailwind/react';
 
 function sortSelectedCourses(a, b) {

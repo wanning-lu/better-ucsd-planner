@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { SelectedCoursesContext } from '../App.js'
-import { PlannedCoursesContext } from './Home.js';
+import { PlannedCoursesContext } from '../App.js';
 import CourseViewer from './CourseViewer';
 import majorDataArray from '../data/CS26.json'
 
@@ -10,6 +10,7 @@ import majorDataArray from '../data/CS26.json'
 function Popup() {
     const { selectedCoursesObj } = useContext(SelectedCoursesContext)
     const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
+    
     const { plannedCourses }  = useContext(PlannedCoursesContext)
     const [isOpened, setOpenPopup] = useState(false);
 
@@ -50,26 +51,39 @@ function Popup() {
       remainingReq[selectedCourses[courseCode]][0] -= 1
     }
 
+    // calculate units remaining
+    let totalPlannedUnits = 0
+    let totalPlannedUpperUnits = 0
+    for (const [_, courseInfo] of Object.entries(plannedCourses)) {
+      const [_, courseNumber] = courseInfo.courseName.split(' ')
+      if (courseNumber.length === 3 && !isNaN(courseNumber)) {
+        totalPlannedUpperUnits += courseInfo.units
+      }
+      totalPlannedUnits += courseInfo.units
+    }
+
     const [courseViewed, changeCourseView] = useState("none")
 
     // using React state to change max height, allows for smooth transition
     const arrowRef = useRef(null);
     const [height, setHeight] = useState("0px");
     useEffect(() => {
-        if (arrowRef.current) {
-          if (isOpened) {
-            setHeight(`${arrowRef.current.scrollHeight}px`);
-          } else {
-            setHeight("0px");
-          }
+      if (arrowRef.current) {
+        if (isOpened) {
+          setHeight(`${arrowRef.current.scrollHeight}px`);
+        } else {
+          setHeight("0px");
         }
-      }, [isOpened]);
+      }
+    }, [isOpened]);
 
     return (
         <div className="fixed bottom-0 left-0 flex flex-col items-center w-screen">
             <div className="w-20 text-center bg-gray-300 rounded-t-md hover:cursor-pointer" onClick={() => setOpenPopup(!isOpened)}>^</div>
             <div ref={arrowRef} style={{ maxHeight: height }} className="flex w-full overflow-auto transition-all duration-300 ease-out resize-y">
                 <div className="w-[20vw] bg-white border-2">
+                  <div>{totalPlannedUnits}/180 units</div>
+                  <div>{totalPlannedUpperUnits}/60 upper div units</div>
                   <div className="font-bold">Remaining course requirements</div>
                   {Object.keys(remainingReq).map((category) => (
                     <>

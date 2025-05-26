@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import courseData from '../data/CSE.json'
 import { SelectedCoursesContext } from '../App.js'
+import { PlannedCoursesContext } from '../App.js';
 
 /*
  * Component for each individual class in 'Discover'
@@ -8,6 +9,8 @@ import { SelectedCoursesContext } from '../App.js'
 function ClassInfo(props) {
     const { selectedCoursesObj } = useContext(SelectedCoursesContext)
     const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
+
+    const { plannedCourses, removePlanCourse } = useContext(PlannedCoursesContext)
     
     // Retrieve the class object from our data
     // If it doesn't exist, we just a placeholder first
@@ -37,6 +40,11 @@ function ClassInfo(props) {
                 addCourse(props.classCode, props.category)
             } else {
                 removeCourse(props.classCode)
+                // if this course has been planned in the schedule
+                if (Object.values(plannedCourses).some(courseInfo => courseInfo.courseName === props.classCode)) {
+                    removePlanCourse(Object.keys(plannedCourses).find(
+                        key => plannedCourses[key].courseName === props.classCode))
+                }
             }
         }}/>
         <div className="inline-block ml-1" onClick={handleOpen}>{" " + props.classCode + ": " + classData['course_name']}</div>
