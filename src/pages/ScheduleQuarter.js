@@ -1,4 +1,3 @@
-import React from 'react'
 import ScheduleCourse from './ScheduleCourse'
 
 function ScheduleQuarter(props) {

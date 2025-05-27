@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { SelectedInfoContext } from '../App.js'
 import { Link } from "react-router-dom";
+import majorArray from '../data/majors.json'
 
 function Welcome() {
     const { selectedInfo, changeInfo } = useContext(SelectedInfoContext)
@@ -10,7 +11,9 @@ function Welcome() {
             <div>select ur major!!</div>
             <select value={selectedInfo.major} onChange={(e) => (changeInfo("major", e.target.value))}>
                 <option value="none">none</option>
-                <option value="cs">cs lulz</option>
+                {
+                    majorArray.map(major => <option value={major.code}>{major.name}</option>)
+                }
             </select>
             <div>select ur college!!</div>
             <select value={selectedInfo.college} onChange={(e) => (changeInfo("college", e.target.value))}>

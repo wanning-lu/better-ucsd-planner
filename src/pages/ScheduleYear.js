@@ -1,4 +1,3 @@
-import React from 'react'
 import ScheduleQuarter from './ScheduleQuarter'
 
 function ScheduleYear(props) {

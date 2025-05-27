@@ -1,4 +1,3 @@
-import React from 'react'
 import * as go from 'gojs'
 import { ReactDiagram } from 'gojs-react'
 

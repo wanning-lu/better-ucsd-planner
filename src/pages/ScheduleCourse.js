@@ -1,4 +1,3 @@
-import React from 'react'
 import { SelectedCoursesContext } from '../App.js'
 import { useContext, useState, useEffect } from 'react';
 import { PlannedCoursesContext } from '../App.js';
