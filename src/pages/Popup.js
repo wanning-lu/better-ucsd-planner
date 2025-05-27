@@ -66,43 +66,43 @@ function Popup() {
 
     // using React state to change max height, allows for smooth transition
     const arrowRef = useRef(null);
-    const [height, setHeight] = useState("0px");
+    const [width, setWidth] = useState("0px");
     useEffect(() => {
       if (arrowRef.current) {
         if (isOpened) {
-          setHeight(`${arrowRef.current.scrollHeight}px`);
+          setWidth(`${window.innerWidth / 2}px`);
         } else {
-          setHeight("0px");
+          setWidth("0px");
         }
       }
     }, [isOpened]);
 
     return (
-        <div className="fixed bottom-0 left-0 flex flex-col items-center w-screen">
-            <div className="w-20 text-center bg-gray-300 rounded-t-md hover:cursor-pointer" onClick={() => setOpenPopup(!isOpened)}>^</div>
-            <div ref={arrowRef} style={{ maxHeight: height }} className="flex w-full overflow-auto transition-all duration-300 ease-out resize-y">
-                <div className="w-[20vw] bg-white border-2">
-                  <div>{totalPlannedUnits}/180 units</div>
-                  <div>{totalPlannedUpperUnits}/60 upper div units</div>
-                  <div className="font-bold">Remaining course requirements</div>
-                  {Object.keys(remainingReq).map((category) => (
-                    <>
-                    <div>{remainingReq[category][0]} {category}</div>
-                    {remainingReq[category][1].map((course) => (
-                      <div className="ml-5">{course}</div>
-                    ))}
-                    </>
-                  ))}
-                </div>
-                <div className="w-[80vw] relative">
-                    <select onChange={(e) => {changeCourseView(e.target.value)}}className="absolute top-5 left-5 z-10 rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                        {Object.keys(selectedCourses).map((course) => {
-                            return (<option value={course}>{course}</option>)
-                        })}
-                    </select>
-                    <CourseViewer selectedClass={courseViewed}/>
-                </div>
+        <div className="fixed top-0 left-0 flex items-center h-screen">
+          <div ref={arrowRef} style={{ maxWidth: width }} className="flex-1 h-screen overflow-auto transition-all duration-300 ease-out resize-x">
+            <div className="bg-white border-2">
+              <div>{totalPlannedUnits}/180 units</div>
+              <div>{totalPlannedUpperUnits}/60 upper div units</div>
+              <div className="font-bold">Remaining course requirements</div>
+              {Object.keys(remainingReq).map((category) => (
+                <>
+                <div>{remainingReq[category][0]} {category}</div>
+                {remainingReq[category][1].map((course) => (
+                  <div className="ml-5">{course}</div>
+                ))}
+                </>
+              ))}
             </div>
+            <div className="relative">
+              <select onChange={(e) => {changeCourseView(e.target.value)}}className="absolute top-5 left-5 z-10 rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                {Object.keys(selectedCourses).map((course) => {
+                    return (<option value={course}>{course}</option>)
+                })}
+              </select>
+              <CourseViewer selectedClass={courseViewed}/>
+            </div>
+          </div>
+          <div className="w-5 h-20 text-center bg-gray-300 rounded-r-md hover:cursor-pointer" onClick={() => setOpenPopup(!isOpened)}>{">"}</div>
         </div>
     )
 }

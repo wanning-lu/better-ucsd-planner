@@ -8,7 +8,7 @@ import ScheduleYear from './ScheduleYear';
 function Schedule() {
     return (
         <>
-            <div className="w-5/6 p-8 border-2">
+            <div className="w-1/2">
                 <ScheduleYear year="24"/> 
                 <ScheduleYear year="25"/> 
                 <ScheduleYear year="26"/> 

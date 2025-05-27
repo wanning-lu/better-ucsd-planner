@@ -52,9 +52,9 @@ function Discover() {
     return (
         <div>
             { popupContent &&
-                <div className="fixed w-5/6 h-5/6">
-                <div onClick={() => closePopup()}>close</div>
-                <CourseViewer selectedClass={popupContent['course_code']}/>
+                <div className="fixed w-full h-5/6">
+									<div onClick={() => closePopup()}>close</div>
+									<CourseViewer selectedClass={popupContent['course_code']}/>
                 </div>
             }
 						<div className="w-5/6 mx-auto">

@@ -295,7 +295,6 @@ function CourseViewer(props) {
 	}
 	
 	return (
-		<div>
 		<ReactDiagram
 			divClassName='diagram-component'
 			initDiagram={initDiagram}
@@ -303,7 +302,6 @@ function CourseViewer(props) {
 			linkDataArray={linkArray}
 			// onModelChange={handleModelChange}
 		/>
-		</div>
 	);
 }
 

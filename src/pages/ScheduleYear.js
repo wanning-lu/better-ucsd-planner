@@ -5,7 +5,8 @@ function ScheduleYear(props) {
 
     return (
         <>
-        <div className="w-full border-2 flex gap-4 h-auto">
+        <div className="font-semibold">20{props.year-1}-20{props.year}</div>
+        <div className="flex w-full h-auto gap-4 mb-4">
             <ScheduleQuarter year={props.year - 1} quarter="FA"/>
             <ScheduleQuarter year={props.year} quarter="WI"/>
             <ScheduleQuarter year={props.year} quarter="SP"/>
