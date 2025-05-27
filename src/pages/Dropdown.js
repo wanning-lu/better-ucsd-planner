@@ -36,8 +36,9 @@ function Dropdown(props) {
 
     useEffect(() => {
 			if (localStorage.getItem("isCoreInit") !== null && localStorage.getItem("isCoreInit")) {
-				return
+					return
 			}
+			
       for (const courseInfo of props.classes) {
         if (courseInfo.length === 1) {
             if (courseInfo[0] in selectedCourses) {

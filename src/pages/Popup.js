@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { SelectedCoursesContext } from '../App.js'
 import { PlannedCoursesContext } from '../App.js';
+import { SelectedInfoContext } from '../App.js';
 import CourseViewer from './CourseViewer';
-import majorDataArray from '../data/CS26.json'
+import majorDataArray from '../data/majors.json'
 
 /**
  * Popup that displays remaining course + course graph information on planner page
@@ -14,9 +15,11 @@ function Popup() {
     const { plannedCourses }  = useContext(PlannedCoursesContext)
     const [isOpened, setOpenPopup] = useState(false);
 
+    const { selectedInfo } = useContext(SelectedInfoContext)
+
     // construct the remaining requirement object here
     let remainingReq = {}
-    let majorData = majorDataArray[0]
+    let majorData = majorDataArray.filter(major => major.code === selectedInfo.major)[0]
     
     // initializing the object
     for (const majorKey in majorData) {
@@ -44,7 +47,7 @@ function Popup() {
     }
 
     // factoring in the courses that have already been planned
-    for (const [key, courseInfo] of Object.entries(plannedCourses)) {
+    for (const [_, courseInfo] of Object.entries(plannedCourses)) {
       let courseCode = courseInfo.courseName
       let indexToRemove = remainingReq[selectedCourses[courseCode]][1].indexOf(courseCode)
       remainingReq[selectedCourses[courseCode]][1].splice(indexToRemove, 1)

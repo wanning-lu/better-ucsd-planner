@@ -29,7 +29,7 @@ function Welcome() {
             </select>
             {/* css for button below taken from https://getcssscan.com/css-buttons-examples (button 2) */}
             <button className="hover:bg-gray-200 focus:bg-gray-200 bg-[rgba(51,_51,_51,_0.05)] rounded-[8px] border-[0] text-[#333333] cursor-pointer inline-block leading-[20px] [list-style:none] m-0 px-[12px] py-[10px] text-center [transition:all_200ms] align-baseline whitespace-nowrap select-none">
-                <Link to="/discover">go go go!!!</Link>
+                <a href="/discover">go go go!!!</a>
             </button>
         </div>
     )

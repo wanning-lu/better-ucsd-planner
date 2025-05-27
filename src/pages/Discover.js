@@ -1,32 +1,9 @@
-import majorDataArray from '../data/CS26.json'
+import majorDataArray from '../data/majors.json'
 import Dropdown from './Dropdown';
 import { useContext, useState } from 'react';
 import { SelectedCoursesContext } from '../App';
+import { SelectedInfoContext } from '../App';
 import CourseViewer from './CourseViewer';
-
-let majorData = majorDataArray[0]
-// core classes should be its own dropdown, with one dropdown avail for each elective
-let coreClasses = []
-let electiveClasses = []
-
-// build core classes array and electives array
-for (const majorKey in majorData) {
-    if (majorKey === 'name' || majorKey === 'code') {
-        continue
-    }
-
-    if (majorKey === 'core_classes') {
-			for (const coreClass of majorData[majorKey]) {
-				let options = coreClass.split(' or ')
-				coreClasses.push(options)
-			}
-    } else {
-			// elective format: name, number required, and classes
-			let elective = [majorKey]
-			elective = elective.concat(majorData[majorKey])
-			electiveClasses.push(elective)
-    }
-}
 
 /**
  * Overall discover page
@@ -34,8 +11,35 @@ for (const majorKey in majorData) {
 function Discover() {
     // for the course viewer graph
     const [popupContent, setPopupContent] = useState(null);
-		const { units } = useContext(SelectedCoursesContext)
-		const [ totalUnits, totalUpperUnits ] = units
+    const { units } = useContext(SelectedCoursesContext)
+    const [ totalUnits, totalUpperUnits ] = units
+
+		const { selectedInfo } = useContext(SelectedInfoContext)
+		let majorData = majorDataArray.filter(major => major.code === selectedInfo.major)[0]
+    
+
+    // core classes should be its own dropdown, with one dropdown avail for each elective
+    let coreClasses = []
+    let electiveClasses = []
+
+    // build core classes array and electives array
+    for (const majorKey in majorData) {
+        if (majorKey === 'name' || majorKey === 'code') {
+            continue
+        }
+
+        if (majorKey === 'core_classes') {
+                for (const coreClass of majorData[majorKey]) {
+                    let options = coreClass.split(' or ')
+                    coreClasses.push(options)
+                }
+        } else {
+                // elective format: name, number required, and classes
+                let elective = [majorKey]
+                elective = elective.concat(majorData[majorKey])
+                electiveClasses.push(elective)
+        }
+    }
 
     const openPopup = (content) => {
         if (popupContent !== null) {

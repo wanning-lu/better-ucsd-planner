@@ -205,6 +205,7 @@ const SelectedInfoProvider = ({ children }) => {
 
 	const changeInfo = (category, value) => {
 		setInfo({...selectedInfo, [category]: value})
+        localStorage.clear()
 		localStorage.setItem("selectedInfo", JSON.stringify({...selectedInfo, [category]: value}))
 	}
 

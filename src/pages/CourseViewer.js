@@ -3,7 +3,9 @@ import { ReactDiagram } from 'gojs-react'
 
 import './App.css';  // contains .diagram-component CSS
 import courseData from '../data/CSE.json'
-import majorData from '../data/CS26.json'
+import majorData from '../data/majors.json'
+import { useContext } from 'react';
+import { SelectedInfoContext } from '../App';
 
 /**
  * This is the component for the course prerequisite viewer.
@@ -139,29 +141,6 @@ function buildGraph(root, prereq, groupName, dataArray, linkArray) {
 	}
 }
 
-// dataArray for the list of nodes
-let dataArray = []
-// linkArray for the links between nodes
-// NOTE: for the sake of formatting, we want the source to be the course and
-// the outgoing to be the prerequisite
-let linkArray = []
-
-// ok...another bandaid solution but i want all the first courses of
-// a multi-selection core requirement to be the real "core"
-let coreClasses = []
-
-let majorData1 = majorData[0]
-
-for (const coreClass of majorData1['core_classes']) {
-	let options = coreClass.split(' or ')
-	if (options.length === 1) {
-		coreClasses.push(options[0])
-	} else {
-		// the first element is the number of "recommended" courses, which are all placed in the front
-		coreClasses = coreClasses.concat(options.slice(1, 1+parseInt(options[0])))
-	}
-}
-
 function removePart(diagram) {
 	diagram.parts.each( function(n) {diagram.remove(n)})
 }
@@ -277,10 +256,36 @@ function initDiagram() {
 	return diagram;
 }
 
+let dataArray = []
+let linkArray = []
+let coreClasses = []
+
 // render function...
 function CourseViewer(props) {
+
+	// dataArray for the list of nodes
 	dataArray = []
+	// linkArray for the links between nodes
+	// NOTE: for the sake of formatting, we want the source to be the course and
+	// the outgoing to be the prerequisite
 	linkArray = []
+
+	// ok...another bandaid solution but i want all the first courses of
+	// a multi-selection core requirement to be the real "core"
+	coreClasses = []
+
+	const { selectedInfo } = useContext(SelectedInfoContext)
+	let majorData1 = majorData.filter(major => major.code === selectedInfo.major)[0]
+
+	for (const coreClass of majorData1['core_classes']) {
+		let options = coreClass.split(' or ')
+		if (options.length === 1) {
+			coreClasses.push(options[0])
+		} else {
+			// the first element is the number of "recommended" courses, which are all placed in the front
+			coreClasses = coreClasses.concat(options.slice(1, 1+parseInt(options[0])))
+		}
+	}
 
 	if (courseData.filter(obj => obj.course_code === props.selectedClass).length === 0) {
 		dataArray.push({key: 1, text: "select a class to see its prerequisites!"})

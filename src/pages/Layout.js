@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 /**
  * General template for each page, mainly the navbar
  */
 function Layout() {
-  const [major, setMajor] = useState('none');
 
   return (
     <>
