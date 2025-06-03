@@ -9,14 +9,14 @@ function Welcome() {
     return (
         <div className="flex flex-col items-center justify-center h-screen gap-4">
             <div>select ur major!!</div>
-            <select value={selectedInfo.major} onChange={(e) => (changeInfo("major", e.target.value))}>
+            <select value={selectedInfo.major} onChange={(e) => (changeInfo({...selectedInfo, major: e.target.value}))}>
                 <option value="none">none</option>
                 {
                     majorArray.map(major => <option value={major.code}>{major.name}</option>)
                 }
             </select>
             <div>select ur college!!</div>
-            <select value={selectedInfo.college} onChange={(e) => (changeInfo("college", e.target.value))}>
+            <select value={selectedInfo.college} onChange={(e) => (changeInfo({...selectedInfo, college: e.target.value}))}>
                 <option value="none">none</option>
                 <option value="revelle">Revelle</option>
                 <option value="erc">ERC</option>

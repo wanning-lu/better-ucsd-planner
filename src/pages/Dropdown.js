@@ -35,9 +35,12 @@ function Dropdown(props) {
     }
 
     useEffect(() => {
-			if (localStorage.getItem("isCoreInit") !== null && localStorage.getItem("isCoreInit")) {
+			console.log('yohoho')
+			console.log(localStorage.getItem("isCoreInit"))
+			if (localStorage.getItem("isCoreInit") !== null && localStorage.getItem("isCoreInit") === 'true') {
 					return
 			}
+			console.log('successss')
 			
       for (const courseInfo of props.classes) {
         if (courseInfo.length === 1) {

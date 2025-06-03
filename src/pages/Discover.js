@@ -14,9 +14,8 @@ function Discover() {
     const { units } = useContext(SelectedCoursesContext)
     const [ totalUnits, totalUpperUnits ] = units
 
-		const { selectedInfo } = useContext(SelectedInfoContext)
-		let majorData = majorDataArray.filter(major => major.code === selectedInfo.major)[0]
-    
+    const { selectedInfo } = useContext(SelectedInfoContext)
+    let majorData = majorDataArray.filter(major => major.code === selectedInfo.major)[0]
 
     // core classes should be its own dropdown, with one dropdown avail for each elective
     let coreClasses = []
