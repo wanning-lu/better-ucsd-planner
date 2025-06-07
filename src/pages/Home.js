@@ -8,9 +8,9 @@ function Home() {
 
   return (
     <>
-      <div className="flex justify-center">
-        <Schedule/>
+      <div className="flex justify-center m-4">
         <Popup/>
+        <Schedule/> 
       </div>
     </>
   );

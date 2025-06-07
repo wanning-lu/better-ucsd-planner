@@ -67,23 +67,10 @@ function Popup() {
 
     const [courseViewed, changeCourseView] = useState("none")
 
-    // using React state to change max height, allows for smooth transition
-    const arrowRef = useRef(null);
-    const [width, setWidth] = useState("0px");
-    useEffect(() => {
-      if (arrowRef.current) {
-        if (isOpened) {
-          setWidth(`${window.innerWidth / 2}px`);
-        } else {
-          setWidth("0px");
-        }
-      }
-    }, [isOpened]);
-
     return (
-        <div className="fixed top-0 left-0 flex items-center h-screen">
-          <div ref={arrowRef} style={{ maxWidth: width }} className="flex-1 h-screen overflow-auto transition-all duration-300 ease-out resize-x">
-            <div className="bg-white border-2">
+        <div className="flex items-center flex-1 h-[85vh]">
+          <div className="flex flex-col flex-1 h-[85vh] overflow-auto">
+            <div className="flex-1 bg-white border-2">
               <div>{totalPlannedUnits}/180 units</div>
               <div>{totalPlannedUpperUnits}/60 upper div units</div>
               <div className="font-bold">Remaining course requirements</div>
@@ -96,7 +83,7 @@ function Popup() {
                 </>
               ))}
             </div>
-            <div className="relative">
+            <div className="relative flex flex-1">
               <select onChange={(e) => {changeCourseView(e.target.value)}}className="absolute top-5 left-5 z-10 rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                 {Object.keys(selectedCourses).map((course) => {
                     return (<option value={course}>{course}</option>)
@@ -105,7 +92,6 @@ function Popup() {
               <CourseViewer selectedClass={courseViewed}/>
             </div>
           </div>
-          <div className="w-5 h-20 text-center bg-gray-300 rounded-r-md hover:cursor-pointer" onClick={() => setOpenPopup(!isOpened)}>{">"}</div>
         </div>
     )
 }
