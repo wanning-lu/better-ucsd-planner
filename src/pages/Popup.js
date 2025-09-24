@@ -13,7 +13,6 @@ function Popup() {
     const [ selectedCourses, addCourse, removeCourse ] = selectedCoursesObj
     
     const { plannedCourses }  = useContext(PlannedCoursesContext)
-    const [isOpened, setOpenPopup] = useState(false);
 
     const { selectedInfo } = useContext(SelectedInfoContext)
 
@@ -68,7 +67,7 @@ function Popup() {
     const [courseViewed, changeCourseView] = useState("none")
 
     return (
-        <div className="flex items-center flex-1 h-[85vh]">
+        <div className="flex items-center flex-1 h-[85vh] mr-5">
           <div className="flex flex-col flex-1 h-[85vh] overflow-auto">
             <div className="flex-1 bg-white border-2">
               <div>{totalPlannedUnits}/180 units</div>
