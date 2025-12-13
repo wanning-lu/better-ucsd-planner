@@ -2,7 +2,6 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import { SelectedInfoContext } from "../App";
 import majorArray from "../data/majors.json"
-import { select } from "@material-tailwind/react";
 
 /**
  * General template for each page, mainly the navbar
@@ -39,7 +38,7 @@ function Layout() {
         </div>
       </div> : <></> }
       { infoPopup ?
-        <div className="fixed bottom-0 left-0 flex flex-col items-center justify-center w-screen h-screen bg-gray-900/40">
+        <div className="fixed bottom-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-screen bg-gray-900/40">
           <div className="relative flex flex-col items-center justify-center gap-4 bg-white rounded-md h-96 w-80">
             <div className="absolute top-0 left-0" onClick={e => openInfoPopup(false)}>X</div>
             <div>select ur major!!</div>
