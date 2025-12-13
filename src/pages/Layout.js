@@ -2,6 +2,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import { SelectedInfoContext } from "../App";
 import majorArray from "../data/majors.json"
+import { select } from "@material-tailwind/react";
 
 /**
  * General template for each page, mainly the navbar
@@ -10,7 +11,9 @@ function Layout() {
   const [ infoPopup, openInfoPopup ] = useState(false)
   const { selectedInfo, changeInfo } = useContext(SelectedInfoContext)
 
-  const [ newInfo, changeNewInfo ]= useState({"major": selectedInfo.major, "college": selectedInfo.college})
+  const [ newInfo, changeNewInfo ]= useState({"major": selectedInfo.major, "college": selectedInfo.college, "year": selectedInfo.year})
+
+  let years = Array.from({ length: 20 }, (value, index) => index);
 
   return (
     <>
@@ -57,6 +60,13 @@ function Layout() {
                 <option value="Sixth">Sixth</option>
                 <option value="seventh">Seventh</option>
                 <option value="eighth">Eighth</option>
+            </select>
+            <div>select ur year!!</div>
+            <select value={selectedInfo.year} onChange={(e) => (changeNewInfo({...selectedInfo, year: e.target.value}))}>
+                <option value="none">none</option>
+                {
+                    years.map(year => <option value={year + 2010}>{year + 2010}</option>)
+                }
             </select>
             {/* css for button below taken from https://getcssscan.com/css-buttons-examples (button 2) */}
             <button className="hover:bg-gray-200 focus:bg-gray-200 bg-[rgba(51,_51,_51,_0.05)] rounded-[8px] border-[0] text-[#333333] cursor-pointer inline-block leading-[20px] [list-style:none] m-0 px-[12px] py-[10px] text-center [transition:all_200ms] align-baseline whitespace-nowrap select-none">

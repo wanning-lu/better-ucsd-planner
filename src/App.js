@@ -201,7 +201,7 @@ const PlannedCoursesProvider = ({ children }) => {
 
 // "info" includes major and college
 const SelectedInfoProvider = ({ children }) => {
-	const [selectedInfo, setInfo] = useState(JSON.parse(localStorage.getItem("selectedInfo")) || {major: 'none', college: 'none'})
+	const [selectedInfo, setInfo] = useState(JSON.parse(localStorage.getItem("selectedInfo")) || {major: 'none', college: 'none', year: 'none'})
 
 	const changeInfo = (newInfo) => {
 		setInfo(newInfo)
