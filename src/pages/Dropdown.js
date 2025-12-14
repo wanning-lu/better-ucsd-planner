@@ -19,22 +19,20 @@ function Dropdown(props) {
 	// show how many selected courses satsify the current requirement
 	let numFulfilled = 0
 	for (let selectedCourse of Object.keys(selectedCourses)) {
-		if (!props.electiveName) {
-			for (let coreClassArray of props.classes) {
-				if (coreClassArray.includes(selectedCourse)) {
-					numFulfilled += 1
-					break
-				}
-			}
-		} else {
-			if (props.classes.includes(selectedCourse)) {
+		for (let classArray of props.classes) {
+			if (classArray.includes(selectedCourse)) {
 				numFulfilled += 1
-				continue
+				break
 			}
 		}
 	}
 
+	// immediately add all singular core classes (for both gened and major)
 	useEffect(() => {
+		if (props.electiveName) {
+			return
+		}
+		
 		if (localStorage.getItem("isCoreInit") !== null && localStorage.getItem("isCoreInit") === 'true') {
 			return
 		}
