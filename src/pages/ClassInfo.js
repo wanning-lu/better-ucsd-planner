@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import courseData from '../data/CSE.json'
+import courseData from '../data/courses.json'
 import { SelectedCoursesContext } from '../App.js'
 import { PlannedCoursesContext } from '../App.js';
 
@@ -15,10 +15,13 @@ function ClassInfo(props) {
     // Retrieve the class object from our data
     // If it doesn't exist, we just a placeholder first
     let classData = {}
-    if (courseData.filter(obj => obj.course_code === props.classCode).length === 0) {
+
+		let classCode = props.classCode.replace("\n", " ")
+			
+    if (courseData.filter(obj => obj.course_code === classCode).length === 0) {
         classData = {'course_code': 'BLAH XXX', 'course_name': 'ERROR: DOES NOT EXIST IN COURSE CATALOG', 'units': 69, 'desc': 'BLAH'}
     } else {
-        classData = courseData.filter(obj => obj.course_code === props.classCode)[0]
+        classData = courseData.filter(obj => obj.course_code === classCode)[0]
     }
      
     // For when the user clicks on the course name to expand its info
@@ -29,7 +32,7 @@ function ClassInfo(props) {
     
     // Add course to the wishlist
     let isSelected = false;
-    if (props.classCode in selectedCourses) {
+    if (classCode in selectedCourses) {
         isSelected = true;
     }
 
@@ -37,21 +40,21 @@ function ClassInfo(props) {
 			<>
 			{
 				classData.course_code == 'BLAH XXX' ? <></> :
-				<input type="checkbox" name={props.classCode} value={props.classCode} checked={isSelected} onChange={e => {
+				<input type="checkbox" name={classCode} value={classCode} checked={isSelected} onChange={e => {
 						if (e.target.checked) {
-								addCourse(props.classCode, props.category)
+								addCourse(classCode, props.category)
 						} else {
-							removeCourse(props.classCode)
+							removeCourse(classCode)
 							// if this course has been planned in the schedule
-							if (Object.values(plannedCourses).some(courseInfo => courseInfo.courseName === props.classCode)) {
+							if (Object.values(plannedCourses).some(courseInfo => courseInfo.courseName === classCode)) {
 								removePlanCourse(Object.keys(plannedCourses).find(
-										key => plannedCourses[key].courseName === props.classCode))
+										key => plannedCourses[key].courseName === classCode))
 							}
 						}
 				}}/>
 			}
 			
-			<div className="inline-block ml-1" onClick={handleOpen}>{" " + props.classCode + ": " + classData['course_name']}</div>
+			<div className="inline-block ml-1" onClick={handleOpen}>{" " + classCode + ": " + classData['course_name']}</div>
 			<div className="w-3/4">
 			{open ? ( 
 				<>

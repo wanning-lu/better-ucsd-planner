@@ -2,7 +2,7 @@ import * as go from 'gojs'
 import { ReactDiagram } from 'gojs-react'
 
 import './App.css';  // contains .diagram-component CSS
-import courseData from '../data/CSE.json'
+import courseData from '../data/courses.json'
 import majorData from '../data/majors.json'
 import { useContext } from 'react';
 import { SelectedInfoContext } from '../App';

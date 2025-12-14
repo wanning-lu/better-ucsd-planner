@@ -4,16 +4,15 @@ import Layout from "./pages/Layout"
 import Discover from "./pages/Discover";
 import Welcome from "./pages/Welcome";
 import { createContext, useState } from 'react';
-import courseData from './data/CSE.json'
+import courseData from './data/courses.json'
 
 export const SelectedCoursesContext = createContext();
 export const SelectedInfoContext = createContext();
 
 const SelectedCoursesProvider = ({ children }) => {
 	const [ selectedCourses, setCourses ] = useState(JSON.parse(localStorage.getItem("wishlistedCourses")) || {[""]: "none"});
-	const [ totalUnits, setUnits ] = useState(localStorage.getItem("totalUnits") || 0)
-	const [ totalUpperUnits, setUpperUnits ] = useState(localStorage.getItem("totalUpperUnits" || 0))
-
+	const [ totalUnits, setUnits ] = useState(parseInt(localStorage.getItem("totalUnits") || 0))
+	const [ totalUpperUnits, setUpperUnits ] = useState(parseInt(localStorage.getItem("totalUpperUnits") || 0))
 	const getUnits = (courseCode) => {
 		let units
 		if (courseData.filter(obj => obj.course_code === courseCode).length !== 0) {
