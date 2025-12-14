@@ -162,7 +162,7 @@ function showNodeInfo(node, diagram) {
 			new go.Shape("RoundedRectangle", { strokeWidth: 0, fill: "gainsboro" }),
 			new go.Panel("Vertical")
 			.add(
-				new go.TextBlock({text: `${node.data.course_name} ${node.data.key}`, margin: new go.Margin(10, 10, 0, 10), font: "Bold 16px sans-serif", width: 200}),
+				new go.TextBlock({text: `${node.data.course_name}`, margin: new go.Margin(10, 10, 0, 10), font: "Bold 16px sans-serif", width: 200}),
 				new go.TextBlock({text: node.data.desc, margin: 10, width: 200})
 			)
 		)
