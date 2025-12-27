@@ -4,6 +4,7 @@ import { PlannedCoursesContext } from '../App.js';
 import { SelectedInfoContext } from '../App.js';
 import CourseViewer from './CourseViewer';
 import majorDataArray from '../data/majors.json'
+import genEdArray from '../data/geneds.json'
 
 /**
  * Popup that displays remaining course + course graph information on planner page
@@ -37,6 +38,23 @@ function Popup() {
       remainingReq[majorKey] = [majorData[majorKey][0], []]
     }
 
+    let genEdData = genEdArray.filter(college => college.college === selectedInfo.college)[0]
+    for (const genEdKey in genEdData) {
+      if (genEdKey === 'college') {
+          continue
+      }
+
+      if (genEdKey === 'core_classes') {
+        remainingReq['Core'] = [genEdData[genEdKey].length, []]
+        continue
+      }
+
+      // first element is num required classes for the category
+      // second element is list of classes selected that haven't
+      // been planned  yet
+      remainingReq[genEdKey] = [genEdData[genEdKey][0], []]
+    }
+
     // adding possible classes to fulfill requirement using selected courses
     for (const [course, category] of Object.entries(selectedCourses)) {
       if (course === "") {
@@ -67,9 +85,9 @@ function Popup() {
     const [courseViewed, changeCourseView] = useState("none")
 
     return (
-        <div className="flex items-center flex-1 h-[85vh] mr-5">
-          <div className="flex flex-col flex-1 h-[85vh] overflow-auto">
-            <div className="flex-1 bg-white border-2">
+        <div className="flex items-center h-[85vh] mr-5">
+          <div className="flex flex-col flex-1 h-[85vh]">
+            <div className="flex-1 overflow-auto bg-white border-2">
               <div>{totalPlannedUnits}/180 units</div>
               <div>{totalPlannedUpperUnits}/60 upper div units</div>
               <div className="font-bold">Remaining course requirements</div>

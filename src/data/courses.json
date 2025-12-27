@@ -59376,59 +59376,6 @@
     "prerequisites": []
 },
 {
-    "course_code": "ANTH 268",
-    "course_name": "Introduction to Science Studies",
-    "units": 4,
-    "desc": "Study and discussion of classic work in history of science, sociology of science, and philosophy of science, and of work that attempts to develop a unified science studies approach. Required for all students in the Science Studies Program. ",
-    "misc_prequisites": "Enrollment in Science Studies Program.",
-    "prerequisites": []
-},
-{
-    "course_code": "ANTH 272",
-    "course_name": "Seminar in Science Studies",
-    "units": 4,
-    "desc": "Study and discussion of selected topics in the science studies field. Required for all students in the Science Studies Program. The topic varies from year to year, and students may, therefore, repeat the course for credit. ",
-    "misc_prequisites": "Enrollment in Science Studies Program.",
-    "prerequisites": []
-},
-{
-    "course_code": "ANTH 273",
-    "course_name": "Colloquium in Science Studies",
-    "units": 4,
-    "desc": "A forum for the presentation and discussion of research in progress in science studies, by graduate students, faculty, and visitors. Required for all students in the Science Studies Program. ",
-    "misc_prequisites": "Enrollment in the Science Studies Program.",
-    "prerequisites": []
-},
-{
-    "course_code": "ANTH 269",
-    "course_name": "Advanced Approaches to Science Studies",
-    "units": 4,
-    "desc": "Contemporary themes and problems in Science Studies. Focus on recent literature in the history, philosophy and sociology of science, technology, and medicine. Required of all students in the Science Studies Program. ",
-    "misc_prequisites": "Enrollment in Science Studies Program; or instructor\u2019s permission.",
-    "prerequisites": [
-        [
-            "ANTH 268, COGR 225A, HIGR 238, PHIL 209A,",
-            "SOCG 255A"
-        ]
-    ]
-},
-{
-    "course_code": "ANTH 227",
-    "course_name": "Living in an Emotional World",
-    "units": 4,
-    "desc": "This course examines the relationship between culture and emotions. It thinks about emotions as sources of knowledge, but also historicizes the delegitimization of emotions in social science and other disciplines. Each week, we will explore one emotion, including anger, shame, and hope. ",
-    "misc_prequisites": "Graduate standing.",
-    "prerequisites": []
-},
-{
-    "course_code": "ANTH 267",
-    "course_name": "Decolonizing Ethnography: Ethics, Politics, and Praxis",
-    "units": 4,
-    "desc": "Despite being foundational to the discipline of anthropology, ethnographic methods are often mystifying to graduate students. Students are expected to simply go into their respective field sites armed with a notebook, voice recorder, and hope. Drawing on feminist and decolonial epistemologies, we will examine, critique, and reconstruct ethnography\u2019s dilemmas, changing forms, and ethical stakes as we understand it as a particular mode of writing and representation. ",
-    "misc_prequisites": "Graduate standing.",
-    "prerequisites": []
-},
-{
     "course_code": "COGR 201D",
     "course_name": "Historical Methods for Communication Research",
     "units": 4,

@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import ClassInfo from './ClassInfo';
 import { SelectedCoursesContext } from '../App.js'
+import courseData from '../data/courses.json'
 
 /**
  * A component representing each category of major requirement
@@ -70,11 +71,18 @@ function Dropdown(props) {
 					) : <>Core Requirements ({numFulfilled} / {props.classes.length})</>}
 				</div>
 			</div>
-		
+			
 			{/* rendering for core classes */}
 			{props.electiveName ? "" : 
-				<div className={open ? "" : "hidden"}>
+				<div className={open ? "p-4 border-2 rounded-md" : "hidden"}>
 					{props.classes.map((classInfo) => {
+						// rendering a whole department of classes
+						if (classInfo.includes("*")) {
+							courseData.filter(classCode => classCode.includes(classInfo.substring(1))).map((course) => {
+								<ClassInfo classCode={course} category={"Core"} onOpenPopup={props.openPopup} />
+							})
+						}
+						
 						if (classInfo.length === 1) {
 							// add these to the selected courses since they're mandatory
 							return (
@@ -101,9 +109,25 @@ function Dropdown(props) {
 
 			{/* rendering for elective classes */}
 			{!props.electiveName ? "" :
-				<div className={open ? "" : "hidden"}>
+				<div className={open ? "p-4 border-2 rounded-md max-h-[20em] overflow-scroll" : "hidden"}>
 					{props.classes.map((classInfo) => {
-						if (classInfo.length === 1) {
+						// rendering a whole department of classes
+						if (classInfo[0].includes("*")) {
+							console.log(courseData.filter(obj => obj.course_code.includes(classInfo[0].substring(1))))
+							return courseData.filter(obj => obj.course_code.includes(classInfo[0].substring(1))).map((course) => {
+								// filter out graduate courses
+								let courseNumber = course.course_code.substring(course.course_code.indexOf(" ") + 1)
+								// remove letters after the course number
+								while (isNaN(courseNumber)) {
+									courseNumber = courseNumber.slice(0, -1)
+								}
+								if (+courseNumber < 200) {	
+									return (<ClassInfo classCode={course.course_code} category={"Core"} onOpenPopup={props.openPopup} />)
+								}
+							})
+						}
+						
+						else if (classInfo.length === 1) {
 							// add these to the selected courses since they're mandatory
 							return (
 								<ClassInfo classCode={classInfo[0]} category={props.electiveName} onOpenPopup={props.openPopup} />
