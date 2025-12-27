@@ -56,7 +56,7 @@ function Layout() {
                 <option value="warren">Warren</option>
                 <option value="marshall">Marshall</option>
                 <option value="muir">Muir</option>
-                <option value="Sixth">Sixth</option>
+                <option value="sixth">Sixth</option>
                 <option value="seventh">Seventh</option>
                 <option value="eighth">Eighth</option>
             </select>
