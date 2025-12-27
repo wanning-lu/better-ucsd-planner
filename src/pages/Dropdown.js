@@ -113,7 +113,6 @@ function Dropdown(props) {
 					{props.classes.map((classInfo) => {
 						// rendering a whole department of classes
 						if (classInfo[0].includes("*")) {
-							console.log(courseData.filter(obj => obj.course_code.includes(classInfo[0].substring(1))))
 							return courseData.filter(obj => obj.course_code.includes(classInfo[0].substring(1))).map((course) => {
 								// filter out graduate courses
 								let courseNumber = course.course_code.substring(course.course_code.indexOf(" ") + 1)

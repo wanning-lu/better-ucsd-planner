@@ -23611,6 +23611,30 @@
     "prerequisites": []
 },
 {
+    "course_code": "FILM 71",
+    "course_name": "Fundamentals of Cinematography",
+    "units": 4,
+    "desc": "An in-depth exploration of the camera and the principles of cinematography. Emphasis is placed on developing fundamental control of the processes and materials through lectures, field, and lab experience.",
+    "misc_prequisites": "",
+    "prerequisites": []
+},
+{
+    "course_code": "FILM 72",
+    "course_name": "Fundamentals of Directing",
+    "units": 4,
+    "desc": "An introduction to the practices and techniques of directing. From lectures, field, and lab experience, students will learn historical and contemporary methodologies in directing, including with cameras, sound, actors, and in documentary contexts.",
+    "misc_prequisites": "",
+    "prerequisites": []
+},
+{
+    "course_code": "FILM 73",
+    "course_name": "Fundamentals of Editing",
+    "units": 4,
+    "desc": "An introduction to both the creative and practical strategies in motion picture editing. Emphasis is placed on developing fundamental control of the processes of structuring and building time-based works through editing and synchronous sound.",
+    "misc_prequisites": "",
+    "prerequisites": []
+},
+{
     "course_code": "FILM 87",
     "course_name": "Film Studies First-year Student Seminar",
     "units": 1,

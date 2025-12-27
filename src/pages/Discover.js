@@ -63,6 +63,19 @@ function Discover() {
         let options = coreClass.split(' or ')
         coreGenEdClasses.push(options)
       }
+    } else if (genEdKey.includes("CHOOSE")) { // allow for multiple!
+      let categories = [genEdKey]
+      for (const category of genEdData[genEdKey]) {
+        let electives = category.slice()
+        for (const [index, electiveClass] of electives.entries()) {
+          if (index == 0 || index == 1) {
+            continue
+          }
+          electives[index] = electives[index].split(' or ')
+        }
+        categories.push(electives)
+      }
+      electiveGenEdClasses.push(categories)
     } else {
       // elective format: name, number required, and classes
       let electives = [genEdKey]
@@ -104,9 +117,24 @@ function Discover() {
       </div>	
       <div className="w-5/6 mx-auto mt-8 text-lg font-bold">General Education</div>
       <Dropdown classes={coreGenEdClasses} openPopup={openPopup}/>
-      {electiveGenEdClasses.map((elective) => (
-        <Dropdown classes={elective.slice(2)} numRequired={elective[1]} electiveName={elective[0]} openPopup={openPopup}/>
-      ))}
+      {electiveGenEdClasses.map((elective) => {
+        if (elective[0].includes("CHOOSE")) {
+          return elective.map(category => {
+            if (category.includes("CHOOSE")) {
+              return (<div className="w-5/6 mx-auto">{category}</div>)
+            } else {
+              return (
+                <div className="ml-4">
+                <Dropdown classes={category.slice(2)} numRequired={category[1]} electiveName={category[0]} openPopup={openPopup}/>
+                </div>
+              )
+            }
+          })
+        } else {
+          return (<Dropdown classes={elective.slice(2)} numRequired={elective[1]} electiveName={elective[0]} openPopup={openPopup}/>)
+        }
+        
+      })}
       <div className="w-5/6 mx-auto mt-8 text-lg font-bold">Major</div>
       <Dropdown classes={coreClasses} openPopup={openPopup}/>
       {electiveClasses.map((elective) => (
